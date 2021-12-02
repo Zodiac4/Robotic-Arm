@@ -16,11 +16,11 @@ AccelStepper M5(1, 34, 36); // E1 Step / Dir
 long M1_x = 0,Speed = 1;
 
 void setup() {
-  M1.setMaxSpeed(800);
-  M2.setMaxSpeed(800);
-  M3.setMaxSpeed(800);
-  M4.setMaxSpeed(800);
-  M5.setMaxSpeed(800);
+  M1.setMaxSpeed(2000);
+  M2.setMaxSpeed(2000);
+  M3.setMaxSpeed(2000);
+  M4.setMaxSpeed(2000);
+  M5.setMaxSpeed(2000);
 
   pinMode(E0_EN, OUTPUT);
   digitalWrite(X_EN, LOW);
