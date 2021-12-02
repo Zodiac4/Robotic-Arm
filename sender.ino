@@ -6,7 +6,7 @@
 #define RXD2        16
 #define TXD2        17
 
-long M1,M2,M3,M4,Speed=1;
+long M1,M2,M3,M4,M5,Speed=1;
 bool UP=0,Down=0;
 
 void setup() {
@@ -56,6 +56,20 @@ void loop() {
         }
        else{bitSet(M4, 14);}
        Serial.println(M4);
+       
+  }
+
+
+    if( abs(Ps3.event.analog_changed.button.l1) > 2 ){
+       M5 = Ps3.data.analog.button.l1, BIN;
+        bitSet(M5, 18)
+       Serial.println(M5);
+       
+  }
+    if( abs(Ps3.event.analog_changed.button.l1) > 2 ){
+       M5 = Ps3.data.analog.button.l1, BIN;
+        bitSet(M5, 19)
+       Serial.println(M5);
        
   }
 
