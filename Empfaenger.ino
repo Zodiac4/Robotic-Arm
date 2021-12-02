@@ -128,7 +128,23 @@ if(Serial2.available()){
         M4.runSpeed();
         }
   }
+    if((bitRead(M1_x,18)&& bitRead(M1_x,19)==0) or ((bitRead(M1_x,18) == 0) && bitRead(M1_x,19))){
+    if((bitRead(M1_x,18) == 0) && bitRead(M1_x,19)){
+      bitClear(M1_x, 19);
+        if(M1_x > 20){
+          M5.setSpeed(M1_x * Speed);
+          M5.runSpeed();
+      }
+    else{bitClear(M1_x, 18);
+          M5.setSpeed(- (M1_x * Speed));
+          M5.runSpeed();}
+    //Serial.println("Achse5");
+    //Serial.println(M1_x,BIN);
+    Serial.println(M1_x,DEC);
+
+  }
 
 }
 
+}
 }
