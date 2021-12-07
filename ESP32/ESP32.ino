@@ -57,7 +57,7 @@ void loop() {
   }
 
 
-    if( abs(Ps3.event.analog_changed.button.l1)){
+    if( abs(Ps3.data.analog.button.l1) > 2){
        M5 = Ps3.data.analog.button.l1, BIN;
        if(bitRead(M5,18)){
         bitClear(M5,18);
@@ -65,7 +65,7 @@ void loop() {
        Serial.println(M5);
        
   }
-    if( abs(Ps3.event.analog_changed.button.r1)){
+    if( abs(Ps3.data.analog.button.r1) > 2){
        M5 = Ps3.data.analog.button.r1, BIN;
        if(bitRead(M5,18)){
         bitClear(M5,18);
