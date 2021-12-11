@@ -173,10 +173,10 @@ void Auto_Home(){
 
     Serial.print("Home Position wird gesucht...  Bitte Start Taste drücken um Motor einzustellen")
 
-    if((bitRead(M_dir,20)&& bitRead(M_dir,21)==0) or ((bitRead(M_dir,20) == 0) && bitRead(M_dir,21))){
-    if((bitRead(M_dir,20) == 0) && bitRead(M_dir,21)){
-      bitSet(M_dir, 20);
-    }else{bitClear(M_dir,20);}
+    if((bitRead(home_p,20)&& bitRead(home_p,21)==0) or ((bitRead(home_p,20) == 0) && bitRead(home_p,21))){
+    if((bitRead(home_p,20) == 0) && bitRead(home_p,21)){
+      bitSet(home_p, 20);
+    }else{bitClear(home_p,20);}
 
     while(home_p == 0){
       M4.moveTo(home_base)
