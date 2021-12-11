@@ -5,6 +5,7 @@
 #define TXD2        17
 
 long M1,M2,M3,M4,M5,Speed=1;
+long h_pos = 0;
 bool UP=0,Down=0;
 
 void setup() {
@@ -21,6 +22,9 @@ void loop() {
   if(!Ps3.isConnected())
         return;
 
+/*__________________________________________________________________
+                        Motoren
+  __________________________________________________________________*/
   if( abs(Ps3.data.analog.stick.rx) > 2 ){
        M1 = Ps3.data.analog.stick.rx, BIN;
        if(bitRead(M1,8)){
@@ -55,8 +59,6 @@ void loop() {
        Serial.println(M4);
        
   }
-
-
     if( abs(Ps3.data.analog.button.l1) > 2){
        M5 = Ps3.data.analog.button.l1, BIN;
        if(bitRead(M5,18)){
@@ -73,6 +75,10 @@ void loop() {
        Serial.println(-M5);
        
   }
+
+/*__________________________________________________________________
+                        Speed Controll
+  __________________________________________________________________*/
 
       if( UP==0 && Ps3.event.button_down.up){
         UP = Ps3.event.button_down.up;
@@ -95,5 +101,20 @@ void loop() {
 UP = Ps3.event.button_down.up;
 Down = Ps3.event.button_down.down;
 
-       
+/*__________________________________________________________________
+                        Auto Home
+  __________________________________________________________________*/
+  if(Ps3.event.button_down.start)
+    h_pos = 1;
+    if(bitRead(h_pos,20)){
+      bitClear(h_pos,20);
+      }else{bitSet(h_pos, 20);}
+    Serial.println(h_pos);
+  if(Ps3.event.button_up.start)
+    h_pos = 0;
+    if(bitRead(h_pos,20)){
+      bitClear(h_pos,20);
+      }else{bitSet(h_pos, 20);}
+    Serial.println(h_pos);
+
 }
