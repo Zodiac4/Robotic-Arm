@@ -1,6 +1,6 @@
 #include <AccelStepper.h> 
 
-void Auto_Home();
+void Home_search();
 
 #define X_EN    38
 #define Y_EN    A2
@@ -33,7 +33,7 @@ void setup() {
   Serial.begin(115200);
   Serial2.begin(115200);
 
-  //Auto_Home()       //Auto_Home variable abrufen
+  //Home_search()       //Auto_Home Funktion abrufen
 
   M1.setMaxSpeed(2000);
   M2.setMaxSpeed(2000);
@@ -48,12 +48,35 @@ M_dir = 0;
 if(Serial2.available()){
 
   
-  
+
+
+  //Einlesen
+
   M_dir = Serial2.parseInt();
   //Serial.println(Serial2.readString());
   //M1_x = Serial2.read();
     //Serial.println(M1_x,BIN);
     //Serial.println(M1_x,DEC);
+
+/*
+                          Home
+*/
+
+    if((bitRead(M_dir,20)&& bitRead(M_dir,21)==0) or ((bitRead(M_dir,20) == 0) && bitRead(M_dir,21))){
+    if((bitRead(M_dir,20) == 0) && bitRead(M_dir,21)){
+      bitSet(M_dir, 20);
+    }else{bitClear(M_dir,20);}
+
+    if(M_dir == 1 ){
+      M4.moveTo(500);
+      m4.run()
+    }else if(M_dir == 0){
+      M4.stop()
+    }
+    }
+/*
+                            Speed
+*/
 
   if(bitRead(M_dir,16) && bitRead(M_dir,17) == 0){
     bitClear(M_dir, 16);
@@ -62,7 +85,10 @@ if(Serial2.available()){
     Serial.println(Speed);
   }
 
-    
+/*
+                            Motoren
+*/
+
   if((bitRead(M_dir,8)&& bitRead(M_dir,9)==0) or ((bitRead(M_dir,8) == 0) && bitRead(M_dir,9))){
     if((bitRead(M_dir,8) == 0) && bitRead(M_dir,9)){
       bitSet(M_dir, 8);
@@ -162,7 +188,8 @@ if(Serial2.available()){
 }
 }
 
-void Auto_Home(){
+
+void Home_search(){
   if(Serial2.available()){
     long home_p = 0;
     long home_base = -1;
@@ -201,3 +228,4 @@ void Auto_Home(){
     }
   }
 }
+
