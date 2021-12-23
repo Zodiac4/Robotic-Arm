@@ -29,11 +29,70 @@ void setup() {
   digitalWrite(E0_EN, LOW);
   digitalWrite(E1_EN, LOW);
   
-  
+
+/*________________________________________________________________________________________
+                            HOME POS
+  ______________________________________________________________________________________*/
   Serial.begin(115200);
   Serial2.begin(115200);
 
-  //Home_search()       //Auto_Home Funktion abrufen
+    long home_p = 0;
+    long home_p_temp = 0;
+    long home_base = -1;
+
+    M4.setMaxSpeed(400);
+    M4.setAcceleration(400);
+    
+    Serial.print("Home Position wird gesucht...");
+
+    while(home_p == 0){
+      home_p_temp = Serial2.parseInt();
+      
+      
+      if((bitRead(home_p_temp,20)&& bitRead(home_p_temp,21)==0) or ((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,21))){
+      if((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,21)){
+      bitSet(home_p_temp, 20);
+      }else{bitClear(home_p_temp,20);}
+      
+      Serial.println(home_p_temp);
+      home_p = home_p_temp;
+      
+      Serial.println(home_p);
+      M4.moveTo(home_base);
+      home_base--;
+      M4.run();
+      delay(2);}
+    }
+
+    M4.setCurrentPosition(0);
+    home_base = 1;
+    home_p = 0;
+    Serial.print("Turn 2");
+
+    while(home_p == 0){
+      home_p_temp = Serial2.parseInt();
+      
+      if((bitRead(home_p_temp,20)&& bitRead(home_p_temp,21)==0) or ((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,21))){
+      if((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,21)){
+      bitSet(home_p_temp, 20);
+      }else{bitClear(home_p_temp,20);}
+
+      home_p = home_p_temp;
+      
+      //Serial.println(home_p);
+      M4.moveTo(home_base);
+      home_base++;
+      M4.run();
+      delay(2);}
+    }
+
+    M4.setCurrentPosition(0);
+    Serial.print("Home Position eingestellt!");
+
+  /*________________________________________________________________________________________
+                            HOME POS ENDE
+    ______________________________________________________________________________________*/
+  
 
   M1.setMaxSpeed(2000);
   M2.setMaxSpeed(2000);
@@ -69,9 +128,9 @@ if(Serial2.available()){
 
     if(M_dir == 1 ){
       M4.moveTo(500);
-      m4.run()
+      M4.run();
     }else if(M_dir == 0){
-      M4.stop()
+      M4.stop();
     }
     }
 /*
@@ -193,39 +252,41 @@ void Home_search(){
   if(Serial2.available()){
     long home_p = 0;
     long home_base = -1;
+
     
     home_p = Serial2.parseInt();
-    M4.setMaxSpeed(100);
-    M4.setAcceleration(100);
+    M4.setMaxSpeed(400);
+    M4.setAcceleration(400);
+    
+    Serial.println(M_dir,DEC);
+    
+    Serial.print("Home Position wird gesucht...  Bitte Start Taste drücken um Motor einzustellen");
 
-    Serial.print("Home Position wird gesucht...  Bitte Start Taste drücken um Motor einzustellen")
-
-    if((bitRead(home_p,20)&& bitRead(home_p,21)==0) or ((bitRead(home_p,20) == 0) && bitRead(home_p,21))){
+    if((bitRead(home_p,20) == 0) && bitRead(home_p,21)){
     if((bitRead(home_p,20) == 0) && bitRead(home_p,21)){
       bitSet(home_p, 20);
     }else{bitClear(home_p,20);}
 
     while(home_p == 0){
-      M4.moveTo(home_base)
+      M4.moveTo(home_base);
       home_base--;
       M4.run();
-      delay(5);
+      delay(2);
     }
 
     M4.setCurrentPosition(0);
     home_base = 1;
 
     while(home_p == 0){
-      M4.moveTo(home_base)
+      M4.moveTo(home_base);
       home_base++;
       M4.run();
-      delay(5);
+      delay(2);
     }
 
     M4.setCurrentPosition(0);
-    Serial.print("Home Position eingestellt!")
+    Serial.print("Home Position eingestellt!");
 
     }
   }
 }
-
