@@ -108,13 +108,17 @@ Down = Ps3.event.button_down.down;
     h_pos = 1;
     if(bitRead(h_pos,20)){
       bitClear(h_pos,20);
-      }else{bitSet(h_pos, 20);}
+      }else{bitSet(h_pos, 20);
     Serial.println(h_pos);
+    //delay(5);
+    }
   if(Ps3.event.button_up.start)
     h_pos = 0;
     if(bitRead(h_pos,20)){
       bitClear(h_pos,20);
-      }else{bitSet(h_pos, 20);}
+      }else{bitSet(h_pos, 20);
     Serial.println(h_pos);
+    //delay(5);
+    }
 
 }
