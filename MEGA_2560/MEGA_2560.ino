@@ -174,18 +174,19 @@ if(Serial2.available()){
       bitSet(M_dir, 8);
       }
     else{bitClear(M_dir, 8);}
-    //Serial.println("Achse1");
+    Serial.println(M1.currentPosition());
     //Serial.println(M1_x,BIN);
-    Serial.println(M_dir,DEC);
+    //Serial.println(M_dir,DEC);
   if(M_dir > 20){
+    M1.moveTo(500);
     M1.setSpeed(M_dir * Speed);
-    M1.runSpeed();
+    M1.run();
     }else if(M_dir < -20) {
+      M1.moveTo(-500);
       M1.setSpeed(M_dir * Speed);
-      M1.runSpeed();
+      M1.run();
       }else{
-        M1.setSpeed(0);
-        M1.runSpeed();
+        M1.stop();
         }
   }
   if((bitRead(M_dir,10)&& bitRead(M_dir,11)==0) or ((bitRead(M_dir,10) == 0) && bitRead(M_dir,11))){
@@ -195,7 +196,7 @@ if(Serial2.available()){
     else{bitClear(M_dir, 10);}
     //Serial.println("Achse2");
     //Serial.println(M1_x,BIN);
-    Serial.println(M_dir,DEC);
+    //Serial.println(M_dir,DEC);
   if(M_dir > 20){
     M2.setSpeed(M_dir * Speed);
     M2.runSpeed();
@@ -214,7 +215,7 @@ if(Serial2.available()){
     else{bitClear(M_dir, 12);}
     //Serial.println("Achse3");
     //Serial.println(M1_x,BIN);
-    Serial.println(M_dir,DEC);
+    //Serial.println(M_dir,DEC);
   if(M_dir > 20){
     M3.setSpeed(M_dir * Speed);
     M3.runSpeed();
@@ -233,7 +234,7 @@ if(Serial2.available()){
       
     //Serial.println("Achse4");
     //Serial.println(M1_x,BIN);
-    Serial.println(M_dir,DEC);
+    //Serial.println(M_dir,DEC);
     
   if(M_dir > 20){
     M4.setSpeed(M_dir * Speed);
