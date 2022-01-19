@@ -112,6 +112,7 @@ Down = Ps3.event.button_down.down;
     Serial.println(h_pos);
     //delay(5);
     }
+  
   if(Ps3.event.button_up.start)
     h_pos = 0;
     if(bitRead(h_pos,20)){
@@ -120,5 +121,5 @@ Down = Ps3.event.button_down.down;
     Serial.println(h_pos);
     //delay(5);
     }
-
+  
 }

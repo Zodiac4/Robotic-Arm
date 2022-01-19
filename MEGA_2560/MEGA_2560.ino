@@ -40,11 +40,9 @@ Serial2.begin(115200);
     long home_p = 0;
     long home_p_temp = 0;
     long home_base = -1;
-    float temp = 0;
-    int temp2 = 0;
 
-    M4.setMaxSpeed(400);
-    M4.setAcceleration(400);
+    M1.setMaxSpeed(400);
+    M1.setAcceleration(400);
     
     Serial.print("Home Position wird gesucht...");
 
@@ -58,55 +56,53 @@ Serial2.begin(115200);
       }else{bitClear(home_p_temp,20);}
       
       //Serial.println(home_p_temp);
-      home_p = home_p_temp;
+      if(home_p_temp == 0 or home_p_temp == 1){
+        home_p = home_p_temp;
+      }
       
       //Serial.println(home_p);
-      M4.moveTo(home_base);
+      M1.moveTo(home_base);
       home_base--;
       //Serial.println(home_base);
-      M4.run();
-      delay(10);}
-
-      
-    }
-
-    M4.setCurrentPosition(0);
-    home_base = 1;
-    home_p = 0;
-    home_p_temp = 0;
-    Serial.print("Turn 2");
-    //Serial.println(home_p);
-    temp = millis();
-    
-    while(home_p != 1){
-      if(millis() > (temp + 2000)){
-        while(temp2 < 5){
-          home_p_temp = Serial2.parseInt();
-          //Serial.println(Serial2.parseInt());
-          //Serial.println(home_p_temp);
-          temp2++;
-        }
-        home_p_temp = Serial2.parseInt();
-        //Serial.println(home_p_temp);
-        
-        if((bitRead(home_p_temp,20)&& bitRead(home_p_temp,21)==0) or ((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,21))){
-        if((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,21)){
-        bitSet(home_p_temp, 20);
-        }else{bitClear(home_p_temp,20);}
-        
-        
-        home_p = home_p_temp;
-        
-        //Serial.println(home_p);
-        M4.moveTo(home_base);
-        home_base++;
-        //Serial.println(home_base);
-        M4.run();
-        delay(10);}
+      M1.run();
+      delay(10);
       }
     }
 
-    M4.setCurrentPosition(0);
+    M1.setCurrentPosition(0);
+    delay(3000);
+    Serial.print("Turn 2");
+    home_base = 1;
+    //home_p = 0;
+    //home_p_temp = 0;
+    
+    //Serial.println(home_p);
+    
+    
+    while(home_p != 1){
+      home_p_temp = Serial2.parseInt();
+      
+      
+      if((bitRead(home_p_temp,20)&& bitRead(home_p_temp,21)==0) or ((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,21))){
+      if((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,21)){
+      bitSet(home_p_temp, 20);
+      }else{bitClear(home_p_temp,20);}
+      
+      //Serial.println(home_p_temp);
+      if(home_p_temp == 0 or home_p_temp == 1){
+        home_p = home_p_temp;
+      }
+      
+      Serial.println(home_p);
+      M1.moveTo(home_base);
+      home_base++;
+      Serial.println(home_base);
+      M1.run();
+      delay(10);
+      }
+    }
+
+    M1.setCurrentPosition(0);
     Serial.print("Home Position eingestellt!");
 
   /*________________________________________________________________________________________
@@ -127,9 +123,6 @@ void loop() {
 M_dir = 0;
 if(Serial2.available()){
 
-  
-
-
   //Einlesen
 
   M_dir = Serial2.parseInt();
@@ -138,22 +131,6 @@ if(Serial2.available()){
     //Serial.println(M1_x,BIN);
     //Serial.println(M1_x,DEC);
 
-/*
-                          Home
-*/
-
-    if((bitRead(M_dir,20)&& bitRead(M_dir,21)==0) or ((bitRead(M_dir,20) == 0) && bitRead(M_dir,21))){
-    if((bitRead(M_dir,20) == 0) && bitRead(M_dir,21)){
-      bitSet(M_dir, 20);
-    }else{bitClear(M_dir,20);}
-
-    if(M_dir == 1 ){
-      M4.moveTo(500);
-      M4.run();
-    }else if(M_dir == 0){
-      M4.stop();
-    }
-    }
 /*
                             Speed
 */
@@ -177,18 +154,19 @@ if(Serial2.available()){
     Serial.println(M1.currentPosition());
     //Serial.println(M1_x,BIN);
     //Serial.println(M_dir,DEC);
-  if(M_dir > 20){
-    M1.moveTo(500);
+  if((M_dir > 20) && (M1.currentPosition() < 1000)){
+    M1.moveTo(1000);
     M1.setSpeed(M_dir * Speed);
     M1.run();
-    }else if(M_dir < -20) {
-      M1.moveTo(-500);
+    }else if((M_dir < -20) && (-1000 < M1.currentPosition())) {
+      M1.moveTo(-1000);
       M1.setSpeed(M_dir * Speed);
       M1.run();
       }else{
         M1.stop();
         }
   }
+  
   if((bitRead(M_dir,10)&& bitRead(M_dir,11)==0) or ((bitRead(M_dir,10) == 0) && bitRead(M_dir,11))){
     if((bitRead(M_dir,10) == 0) && bitRead(M_dir,11)){
       bitSet(M_dir, 10);
@@ -197,17 +175,19 @@ if(Serial2.available()){
     //Serial.println("Achse2");
     //Serial.println(M1_x,BIN);
     //Serial.println(M_dir,DEC);
-  if(M_dir > 20){
+  if((M_dir > 20) && (M2.currentPosition() < 1000)){
+    M2.moveTo(1000);
     M2.setSpeed(M_dir * Speed);
-    M2.runSpeed();
-    }else if(M_dir < -20) {
+    M2.run();
+    }else if((M_dir < -20) && (-1000 < M2.currentPosition())) {
+      M2.moveTo(-1000);
       M2.setSpeed(M_dir * Speed);
-      M2.runSpeed();
+      M2.run();
       }else{
-        M2.setSpeed(0);
-        M2.runSpeed();
+        M2.stop();
         }
   }
+  
   if((bitRead(M_dir,12)&& bitRead(M_dir,13)==0) or ((bitRead(M_dir,12) == 0) && bitRead(M_dir,13))){
     if((bitRead(M_dir,12) == 0) && bitRead(M_dir,13)){
       bitSet(M_dir, 12);
@@ -216,17 +196,19 @@ if(Serial2.available()){
     //Serial.println("Achse3");
     //Serial.println(M1_x,BIN);
     //Serial.println(M_dir,DEC);
-  if(M_dir > 20){
+  if((M_dir > 20) && (M3.currentPosition() < 1000)){
+    M3.moveTo(1000);
     M3.setSpeed(M_dir * Speed);
-    M3.runSpeed();
-    }else if(M_dir < -20) {
+    M3.run();
+    }else if((M_dir < -20) && (-1000 < M3.currentPosition())) {
+      M3.moveTo(-1000);
       M3.setSpeed(M_dir * Speed);
-      M3.runSpeed();
+      M3.run();
       }else{
-        M3.setSpeed(0);
-        M3.runSpeed();
+        M3.stop();
         }
   }
+  
     if((bitRead(M_dir,14)&& bitRead(M_dir,15)==0) or ((bitRead(M_dir,14) == 0) && bitRead(M_dir,15))){
     if((bitRead(M_dir,14) == 0) && bitRead(M_dir,15)){
       bitSet(M_dir, 14);
@@ -236,79 +218,37 @@ if(Serial2.available()){
     //Serial.println(M1_x,BIN);
     //Serial.println(M_dir,DEC);
     
-  if(M_dir > 20){
+  if((M_dir > 20) && (M4.currentPosition() < 1000)){
+    M4.moveTo(1000);
     M4.setSpeed(M_dir * Speed);
-    M4.runSpeed();
-    }else if(M_dir < -20) {
+    M4.run();
+    }else if((M_dir < -20) && (-1000 < M4.currentPosition())) {
+      M4.moveTo(-1000);
       M4.setSpeed(M_dir * Speed);
-      M4.runSpeed();
+      M4.run();
       }else{
-        M4.setSpeed(0);
-        M4.runSpeed();
+        M4.stop();
         }
   }
+
+  
     if((bitRead(M_dir,18)&& bitRead(M_dir,19)==0) or ((bitRead(M_dir,18) == 0) && bitRead(M_dir,19))){
     if((bitRead(M_dir,18) == 0) && bitRead(M_dir,19)){
       bitSet(M_dir, 18);
     }else{bitClear(M_dir,18);}
     
-  if(M_dir > 20){
-    M5.setSpeed((M_dir / 2) * Speed);
-    Serial.println(M_dir,DEC);
-    M5.runSpeed();
-    }else if(M_dir < -20) {
-      M5.setSpeed((M_dir / 2) * Speed);
-      Serial.println(M_dir,DEC);
-      M5.runSpeed();
+  if((M_dir > 20) && (M5.currentPosition() < 1000)){
+    M5.moveTo(1000);
+    M5.setSpeed(M_dir * Speed);
+    M5.run();
+    }else if((M_dir < -20) && (-1000 < M5.currentPosition())) {
+      M5.moveTo(-1000);
+      M5.setSpeed(M_dir * Speed);
+      M5.run();
       }else{
-        M5.setSpeed(0);
-        M5.runSpeed();
+        M5.stop();
         }
       }
 
 }
-}
-
-
-void Home_search(){
-  if(Serial2.available()){
-    long home_p = 0;
-    long home_base = -1;
-
-    
-    home_p = Serial2.parseInt();
-    M4.setMaxSpeed(400);
-    M4.setAcceleration(400);
-    
-    Serial.println(M_dir,DEC);
-    
-    Serial.print("Home Position wird gesucht...  Bitte Start Taste drücken um Motor einzustellen");
-
-    if((bitRead(home_p,20) == 0) && bitRead(home_p,21)){
-    if((bitRead(home_p,20) == 0) && bitRead(home_p,21)){
-      bitSet(home_p, 20);
-    }else{bitClear(home_p,20);}
-
-    while(home_p == 0){
-      M4.moveTo(home_base);
-      home_base--;
-      M4.run();
-      delay(2);
-    }
-
-    M4.setCurrentPosition(0);
-    home_base = 1;
-
-    while(home_p == 0){
-      M4.moveTo(home_base);
-      home_base++;
-      M4.run();
-      delay(2);
-    }
-
-    M4.setCurrentPosition(0);
-    Serial.print("Home Position eingestellt!");
-
-    }
-  }
 }
