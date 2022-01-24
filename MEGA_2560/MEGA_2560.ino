@@ -253,12 +253,13 @@ if(Serial2.available()){
 /*-------------------------------------------------
                   Zurück zu Home
 ---------------------------------------------------*/
-  if((bitRead(home_p_temp,20)&& bitRead(home_p_temp,21)==0) or ((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,21))){
-    if((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,21)){
-      bitSet(home_p_temp, 20);
-    }else{bitClear(home_p_temp,20);}
+  if((bitRead(M_dir,20)&& bitRead(M_dir,21)==0) or ((bitRead(M_dir,20) == 0) && bitRead(M_dir,21))){
+    if((bitRead(M_dir,20) == 0) && bitRead(M_dir,21)){
+      bitSet(M_dir, 20);
+    }else{bitClear(M_dir,20);}
 
-  M1.moveTo(0);
+  if(M_dir == 1){
+    M1.moveTo(0);
     M1.setSpeed(1000);
     M2.moveTo(0);
     M2.setSpeed(1000);
@@ -268,6 +269,14 @@ if(Serial2.available()){
     M4.setSpeed(1000);
     M5.moveTo(0);
     M5.setSpeed(1000);
+  }else if(M_dir == 0){
+    M1.stop();
+    M2.stop();
+    M3.stop();
+    M4.stop();
+    M5.stop();
+  }
+  
   }
 }
 }
