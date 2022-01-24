@@ -250,5 +250,24 @@ if(Serial2.available()){
         }
       }
 
+/*-------------------------------------------------
+                  Zurück zu Home
+---------------------------------------------------*/
+  if((bitRead(home_p_temp,20)&& bitRead(home_p_temp,21)==0) or ((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,21))){
+    if((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,21)){
+      bitSet(home_p_temp, 20);
+    }else{bitClear(home_p_temp,20);}
+
+  M1.moveTo(0);
+    M1.setSpeed(1000);
+    M2.moveTo(0);
+    M2.setSpeed(1000);
+    M3.moveto(0);
+    M3.setSpeed(1000);
+    M4.moveTo(0);
+    M4.setSpeed(1000);
+    M5.moveTo(0);
+    M5.setSpeed(1000);
+  }
 }
 }
