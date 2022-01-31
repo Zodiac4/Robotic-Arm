@@ -1,4 +1,5 @@
 #include <AccelStepper.h> 
+#include <Servo.h>
 
 void Home_search();
 
@@ -9,6 +10,8 @@ void Home_search();
 #define E1_EN    30
 #define RX        0
 #define TX        1
+
+Greifer.attach(4) // activate Servo mit pin Dv
 
 AccelStepper M1(1, A0, A1); // X Step / Dir
 AccelStepper M2(1, A6, A7); // Y Step / Dir
@@ -249,6 +252,13 @@ if(Serial2.available()){
         M5.stop();
         }
       }
+
+/*-------------------------------------------------
+                  Servo Greifer
+-------------------------------------------------*/
+// If abfrage
+Greifer.write(M_dir);
+
 
 /*-------------------------------------------------
                   Zurück zu Home

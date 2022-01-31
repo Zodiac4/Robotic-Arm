@@ -4,7 +4,7 @@
 #define RXD2        16
 #define TXD2        17
 
-long M1,M2,M3,M4,M5,Speed=1;
+long M1,M2,M3,M4,M5,Speed,Servo = 1;
 long h_pos = 0;
 bool UP=0,Down=0;
 
@@ -75,7 +75,24 @@ void loop() {
        Serial.println(-M5);
        
   }
+/*__________________________________________________________________
+                        Servo Greifer
+  __________________________________________________________________*/
+  if( abs(Ps3.data.analog.button.r2) > 2){
+    Servo = Ps3.data.analog.button.r2, BIN;
+       if(bitRead(Servo,22)){
+        bitClear(Servo,22);
+        }else{bitSet(Servo, 22);}
+        Serial.println(Servo);
+  }
 
+  if( abs(Ps3.data.analog.button.l2) > 2){
+    Servo = Ps3.data.analog.button.l2, BIN;
+       if(bitRead(Servo,22)){
+        bitClear(Servo,22);
+        }else{bitSet(Servo, 22);}
+        Serial.println(-Servo);
+  }
 /*__________________________________________________________________
                         Speed Controll
   __________________________________________________________________*/
