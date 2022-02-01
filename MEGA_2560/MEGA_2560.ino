@@ -11,7 +11,7 @@ void Home_search();
 #define RX        0
 #define TX        1
 
-Greifer.attach(4) // activate Servo mit pin Dv
+//Greifer.attach(4) // activate Servo mit pin Dv
 
 AccelStepper M1(1, A0, A1); // X Step / Dir
 AccelStepper M2(1, A6, A7); // Y Step / Dir
@@ -157,12 +157,12 @@ if(Serial2.available()){
     Serial.println(M1.currentPosition());
     //Serial.println(M1_x,BIN);
     //Serial.println(M_dir,DEC);
-  if((M_dir > 20) && (M1.currentPosition() < 1000)){
-    M1.moveTo(1000);
+  if((M_dir > 20) && (M1.currentPosition() < 3000)){
+    M1.moveTo(3000);
     M1.setSpeed(M_dir * Speed);
     M1.run();
-    }else if((M_dir < -20) && (-1000 < M1.currentPosition())) {
-      M1.moveTo(-1000);
+    }else if((M_dir < -20) && (-3000 < M1.currentPosition())) {
+      M1.moveTo(-3000);
       M1.setSpeed(M_dir * Speed);
       M1.run();
       }else{
@@ -178,12 +178,12 @@ if(Serial2.available()){
     //Serial.println("Achse2");
     //Serial.println(M1_x,BIN);
     //Serial.println(M_dir,DEC);
-  if((M_dir > 20) && (M2.currentPosition() < 1000)){
-    M2.moveTo(1000);
+  if((M_dir > 20) && (M2.currentPosition() < 3000)){
+    M2.moveTo(3000);
     M2.setSpeed(M_dir * Speed);
     M2.run();
-    }else if((M_dir < -20) && (-1000 < M2.currentPosition())) {
-      M2.moveTo(-1000);
+    }else if((M_dir < -20) && (-3000 < M2.currentPosition())) {
+      M2.moveTo(-3000);
       M2.setSpeed(M_dir * Speed);
       M2.run();
       }else{
@@ -199,12 +199,12 @@ if(Serial2.available()){
     //Serial.println("Achse3");
     //Serial.println(M1_x,BIN);
     //Serial.println(M_dir,DEC);
-  if((M_dir > 20) && (M3.currentPosition() < 1000)){
-    M3.moveTo(1000);
+  if((M_dir > 20) && (M3.currentPosition() < 3000)){
+    M3.moveTo(3000);
     M3.setSpeed(M_dir * Speed);
     M3.run();
-    }else if((M_dir < -20) && (-1000 < M3.currentPosition())) {
-      M3.moveTo(-1000);
+    }else if((M_dir < -20) && (-3000 < M3.currentPosition())) {
+      M3.moveTo(-3000);
       M3.setSpeed(M_dir * Speed);
       M3.run();
       }else{
@@ -221,12 +221,12 @@ if(Serial2.available()){
     //Serial.println(M1_x,BIN);
     //Serial.println(M_dir,DEC);
     
-  if((M_dir > 20) && (M4.currentPosition() < 1000)){
-    M4.moveTo(1000);
+  if((M_dir > 20) && (M4.currentPosition() < 3000)){
+    M4.moveTo(3000);
     M4.setSpeed(M_dir * Speed);
     M4.run();
-    }else if((M_dir < -20) && (-1000 < M4.currentPosition())) {
-      M4.moveTo(-1000);
+    }else if((M_dir < -20) && (-3000 < M4.currentPosition())) {
+      M4.moveTo(-3000);
       M4.setSpeed(M_dir * Speed);
       M4.run();
       }else{
@@ -240,12 +240,12 @@ if(Serial2.available()){
       bitSet(M_dir, 18);
     }else{bitClear(M_dir,18);}
     
-  if((M_dir > 20) && (M5.currentPosition() < 1000)){
-    M5.moveTo(1000);
+  if((M_dir > 20) && (M5.currentPosition() < 3000)){
+    M5.moveTo(3000);
     M5.setSpeed(M_dir * Speed);
     M5.run();
-    }else if((M_dir < -20) && (-1000 < M5.currentPosition())) {
-      M5.moveTo(-1000);
+    }else if((M_dir < -20) && (-3000 < M5.currentPosition())) {
+      M5.moveTo(-3000);
       M5.setSpeed(M_dir * Speed);
       M5.run();
       }else{
@@ -255,12 +255,16 @@ if(Serial2.available()){
 
 /*-------------------------------------------------
                   Servo Greifer
--------------------------------------------------*/
-// If abfrage
-Greifer.write(M_dir);
+-------------------------------------------------
+    if((bitRead(M_dir,22)&& bitRead(M_dir,23)==0) or ((bitRead(M_dir,22) == 0) && bitRead(M_dir,23))){
+    if((bitRead(M_dir,22) == 0) && bitRead(M_dir,23)){
+      bitSet(M_dir, 22);
+    }else{bitClear(M_dir,22);}
+    
+      Greifer.write(M_dir);
 
-
-/*-------------------------------------------------
+    }
+-------------------------------------------------
                   Zurück zu Home
 ---------------------------------------------------*/
   if((bitRead(M_dir,20)&& bitRead(M_dir,21)==0) or ((bitRead(M_dir,20) == 0) && bitRead(M_dir,21))){
@@ -273,7 +277,7 @@ Greifer.write(M_dir);
     M1.setSpeed(1000);
     M2.moveTo(0);
     M2.setSpeed(1000);
-    M3.moveto(0);
+    M3.moveTo(0);
     M3.setSpeed(1000);
     M4.moveTo(0);
     M4.setSpeed(1000);
