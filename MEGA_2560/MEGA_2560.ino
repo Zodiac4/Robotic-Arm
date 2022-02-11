@@ -52,8 +52,8 @@ Serial2.begin(115200);
       home_p_temp = Serial2.parseInt();
       
       
-      if((bitRead(home_p_temp,20)&& bitRead(home_p_temp,21)==0) or ((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,21))){
-      if((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,21)){
+      if((bitRead(home_p_temp,20)&& bitRead(home_p_temp,31)==0) or ((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,31))){
+      if((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,31)){
       bitSet(home_p_temp, 20);
       }else{bitClear(home_p_temp,20);}
       
@@ -89,8 +89,8 @@ Serial2.begin(115200);
         home_p_temp = Serial2.parseInt();
         //Serial.println(home_p_temp);
         
-        if((bitRead(home_p_temp,20)&& bitRead(home_p_temp,21)==0) or ((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,21))){
-        if((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,21)){
+        if((bitRead(home_p_temp,20)&& bitRead(home_p_temp,31)==0) or ((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,31))){
+        if((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,31)){
         bitSet(home_p_temp, 20);
         }else{bitClear(home_p_temp,20);}
         
@@ -142,8 +142,8 @@ if(Serial2.available()){
                           Home
 */
 
-    if((bitRead(M_dir,20)&& bitRead(M_dir,21)==0) or ((bitRead(M_dir,20) == 0) && bitRead(M_dir,21))){
-    if((bitRead(M_dir,20) == 0) && bitRead(M_dir,21)){
+    if((bitRead(M_dir,20)&& bitRead(M_dir,31)==0) or ((bitRead(M_dir,20) == 0) && bitRead(M_dir,31))){
+    if((bitRead(M_dir,20) == 0) && bitRead(M_dir,31)){
       bitSet(M_dir, 20);
     }else{bitClear(M_dir,20);}
 
@@ -158,7 +158,7 @@ if(Serial2.available()){
                             Speed
 */
 
-  if(bitRead(M_dir,16) && bitRead(M_dir,17) == 0){
+  if(bitRead(M_dir,16) && bitRead(M_dir,31) == 0){
     bitClear(M_dir, 16);
     Speed = M_dir;
     Serial.println("Speed");
@@ -169,8 +169,8 @@ if(Serial2.available()){
                             Motoren
 */
 
-  if((bitRead(M_dir,8)&& bitRead(M_dir,9)==0) or ((bitRead(M_dir,8) == 0) && bitRead(M_dir,9))){
-    if((bitRead(M_dir,8) == 0) && bitRead(M_dir,9)){
+  if((bitRead(M_dir,8)&& bitRead(M_dir,31)==0) or ((bitRead(M_dir,8) == 0) && bitRead(M_dir,31))){
+    if((bitRead(M_dir,8) == 0) && bitRead(M_dir,31)){
       bitSet(M_dir, 8);
       }
     else{bitClear(M_dir, 8);}
@@ -188,8 +188,8 @@ if(Serial2.available()){
         M1.runSpeed();
         }
   }
-  if((bitRead(M_dir,10)&& bitRead(M_dir,11)==0) or ((bitRead(M_dir,10) == 0) && bitRead(M_dir,11))){
-    if((bitRead(M_dir,10) == 0) && bitRead(M_dir,11)){
+  if((bitRead(M_dir,10)&& bitRead(M_dir,31)==0) or ((bitRead(M_dir,10) == 0) && bitRead(M_dir,31))){
+    if((bitRead(M_dir,10) == 0) && bitRead(M_dir,31)){
       bitSet(M_dir, 10);
       }
     else{bitClear(M_dir, 10);}
@@ -207,8 +207,8 @@ if(Serial2.available()){
         M2.runSpeed();
         }
   }
-  if((bitRead(M_dir,12)&& bitRead(M_dir,13)==0) or ((bitRead(M_dir,12) == 0) && bitRead(M_dir,13))){
-    if((bitRead(M_dir,12) == 0) && bitRead(M_dir,13)){
+  if((bitRead(M_dir,12)&& bitRead(M_dir,31)==0) or ((bitRead(M_dir,12) == 0) && bitRead(M_dir,31))){
+    if((bitRead(M_dir,12) == 0) && bitRead(M_dir,31)){
       bitSet(M_dir, 12);
       }
     else{bitClear(M_dir, 12);}
@@ -226,8 +226,8 @@ if(Serial2.available()){
         M3.runSpeed();
         }
   }
-    if((bitRead(M_dir,14)&& bitRead(M_dir,15)==0) or ((bitRead(M_dir,14) == 0) && bitRead(M_dir,15))){
-    if((bitRead(M_dir,14) == 0) && bitRead(M_dir,15)){
+    if((bitRead(M_dir,14)&& bitRead(M_dir,31)==0) or ((bitRead(M_dir,14) == 0) && bitRead(M_dir,31))){
+    if((bitRead(M_dir,14) == 0) && bitRead(M_dir,31)){
       bitSet(M_dir, 14);
       }else{bitClear(M_dir, 14);}
       
@@ -246,8 +246,8 @@ if(Serial2.available()){
         M4.runSpeed();
         }
   }
-    if((bitRead(M_dir,18)&& bitRead(M_dir,19)==0) or ((bitRead(M_dir,18) == 0) && bitRead(M_dir,19))){
-    if((bitRead(M_dir,18) == 0) && bitRead(M_dir,19)){
+    if((bitRead(M_dir,18)&& bitRead(M_dir,31)==0) or ((bitRead(M_dir,18) == 0) && bitRead(M_dir,31))){
+    if((bitRead(M_dir,18) == 0) && bitRead(M_dir,31)){
       bitSet(M_dir, 18);
     }else{bitClear(M_dir,18);}
     
@@ -283,8 +283,8 @@ void Home_search(){
     
     Serial.print("Home Position wird gesucht...  Bitte Start Taste drücken um Motor einzustellen");
 
-    if((bitRead(home_p,20) == 0) && bitRead(home_p,21)){
-    if((bitRead(home_p,20) == 0) && bitRead(home_p,21)){
+    if((bitRead(home_p,20) == 0) && bitRead(home_p,31)){
+    if((bitRead(home_p,20) == 0) && bitRead(home_p,31)){
       bitSet(home_p, 20);
     }else{bitClear(home_p,20);}
 
