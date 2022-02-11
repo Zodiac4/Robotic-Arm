@@ -83,7 +83,6 @@ Serial2.begin(115200);
     
     
     while(home_p != 1){
-<<<<<<< HEAD
       if(millis() > (temp + 2000)){
         while(temp2 < 5){
           home_p_temp = Serial2.parseInt();
@@ -100,18 +99,6 @@ Serial2.begin(115200);
         }else{bitClear(home_p_temp,20);}
         
         
-=======
-      home_p_temp = Serial2.parseInt();
-      
-      
-      if((bitRead(home_p_temp,20)&& bitRead(home_p_temp,21)==0) or ((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,21))){
-      if((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,21)){
-      bitSet(home_p_temp, 20);
-      }else{bitClear(home_p_temp,20);}
-      
-      //Serial.println(home_p_temp);
-      if(home_p_temp == 0 or home_p_temp == 1){
->>>>>>> ab7354e77ceea9749a5cff6a46cc08e5d31e83c6
         home_p = home_p_temp;
       }
       
@@ -154,7 +141,6 @@ if(Serial2.available()){
     //Serial.println(M1_x,DEC);
 
 /*
-<<<<<<< HEAD
                           Home
 */
 
@@ -171,8 +157,6 @@ if(Serial2.available()){
     }
     }
 /*
-=======
->>>>>>> ab7354e77ceea9749a5cff6a46cc08e5d31e83c6
                             Speed
 */
 
@@ -207,14 +191,8 @@ if(Serial2.available()){
         M1.stop();
         }
   }
-<<<<<<< HEAD
   if((bitRead(M_dir,10)&& bitRead(M_dir,31)==0) or ((bitRead(M_dir,10) == 0) && bitRead(M_dir,31))){
     if((bitRead(M_dir,10) == 0) && bitRead(M_dir,31)){
-=======
-  
-  if((bitRead(M_dir,10)&& bitRead(M_dir,11)==0) or ((bitRead(M_dir,10) == 0) && bitRead(M_dir,11))){
-    if((bitRead(M_dir,10) == 0) && bitRead(M_dir,11)){
->>>>>>> ab7354e77ceea9749a5cff6a46cc08e5d31e83c6
       bitSet(M_dir, 10);
       }
     else{bitClear(M_dir, 10);}
@@ -233,14 +211,8 @@ if(Serial2.available()){
         M2.stop();
         }
   }
-<<<<<<< HEAD
   if((bitRead(M_dir,12)&& bitRead(M_dir,31)==0) or ((bitRead(M_dir,12) == 0) && bitRead(M_dir,31))){
     if((bitRead(M_dir,12) == 0) && bitRead(M_dir,31)){
-=======
-  
-  if((bitRead(M_dir,12)&& bitRead(M_dir,13)==0) or ((bitRead(M_dir,12) == 0) && bitRead(M_dir,13))){
-    if((bitRead(M_dir,12) == 0) && bitRead(M_dir,13)){
->>>>>>> ab7354e77ceea9749a5cff6a46cc08e5d31e83c6
       bitSet(M_dir, 12);
       }
     else{bitClear(M_dir, 12);}
