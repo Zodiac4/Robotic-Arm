@@ -4,11 +4,7 @@
 #define RXD2        16
 #define TXD2        17
 
-<<<<<<< HEAD
 long M1,M2,M3,M4,M5,Speed,Servom = 1;
-=======
-long M1,M2,M3,M4,M5,Speed=1;
->>>>>>> parent of c24c965 (Servo für Greifer eingebaut)
 long h_pos = 0;
 bool UP=0,Down=0;
 
@@ -79,7 +75,6 @@ void loop() {
        Serial.println(-M5);
        
   }
-<<<<<<< HEAD
 /*__________________________________________________________________
                         Servo Greifer
   __________________________________________________________________*/
@@ -98,9 +93,6 @@ void loop() {
         }else{bitSet(Servom, 22);}
         Serial.println(-Servom);
   }
-=======
-
->>>>>>> parent of c24c965 (Servo für Greifer eingebaut)
 /*__________________________________________________________________
                         Speed Controll
   __________________________________________________________________*/
