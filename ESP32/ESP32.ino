@@ -99,8 +99,8 @@ void loop() {
 
       if( UP==0 && Ps3.event.button_down.up){
         UP = Ps3.event.button_down.up;
-        if(Speed < 25){
-          Speed = Speed + 5;
+        if(Speed < 5){
+          Speed++;
           bitSet(Speed, 16);
           Serial.println(Speed);
           bitClear(Speed, 16);
@@ -108,7 +108,7 @@ void loop() {
       if(Down == 0 && Ps3.event.button_down.down){
         Down = Ps3.event.button_down.down;
         if(Speed > 1){
-          Speed = Speed - 5;
+          Speed--;
           bitSet(Speed, 16);
           Serial.println(Speed);
           bitClear(Speed, 16);
