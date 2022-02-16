@@ -83,14 +83,10 @@ Serial2.begin(115200);
     
     
     while(home_p != 1){
-      if(millis() > (temp + 2000)){
-        while(temp2 < 5){
-          home_p_temp = Serial2.parseInt();
-          //Serial.println(Serial2.parseInt());
-          //Serial.println(home_p_temp);
-          temp2++;
-        }
         home_p_temp = Serial2.parseInt();
+        //Serial.println(Serial2.parseInt());
+        //Serial.println(home_p_temp);
+          
         //Serial.println(home_p_temp);
         
         if((bitRead(home_p_temp,20)&& bitRead(home_p_temp,31)==0) or ((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,31))){
