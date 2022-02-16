@@ -1,4 +1,5 @@
 #include <AccelStepper.h> 
+#include <Servo.h>
 
 void Home_search();
 
@@ -10,11 +11,8 @@ void Home_search();
 #define RX        0
 #define TX        1
 
-<<<<<<< HEAD
 //Greifer.attach(4) // activate Servo mit pin Dv
 
-=======
->>>>>>> parent of c24c965 (Servo für Greifer eingebaut)
 AccelStepper M1(1, A0, A1); // X Step / Dir
 AccelStepper M2(1, A6, A7); // Y Step / Dir
 AccelStepper M3(1, 46, 48); // Z Step / Dir
@@ -86,9 +84,6 @@ Serial2.begin(115200);
     
     while(home_p != 1){
         home_p_temp = Serial2.parseInt();
-        //Serial.println(Serial2.parseInt());
-        //Serial.println(home_p_temp);
-          
         //Serial.println(home_p_temp);
         
         if((bitRead(home_p_temp,20)&& bitRead(home_p_temp,31)==0) or ((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,31))){
@@ -107,7 +102,7 @@ Serial2.begin(115200);
       M1.run();
       delay(10);
       }
-    }
+    
 
     M1.setCurrentPosition(0);
     Serial.print("Home Position eingestellt!");
@@ -272,7 +267,6 @@ if(Serial2.available()){
       }
 
 /*-------------------------------------------------
-<<<<<<< HEAD
                   Servo Greifer
 -------------------------------------------------
     if((bitRead(M_dir,22)&& bitRead(M_dir,23)==0) or ((bitRead(M_dir,22) == 0) && bitRead(M_dir,23))){
@@ -284,8 +278,6 @@ if(Serial2.available()){
 
     }
 -------------------------------------------------
-=======
->>>>>>> parent of c24c965 (Servo für Greifer eingebaut)
                   Zurück zu Home
 ---------------------------------------------------*/
   if((bitRead(M_dir,20)&& bitRead(M_dir,21)==0) or ((bitRead(M_dir,20) == 0) && bitRead(M_dir,21))){
