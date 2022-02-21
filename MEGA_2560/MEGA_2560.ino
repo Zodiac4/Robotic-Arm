@@ -13,11 +13,11 @@ void Home_search();
 
 //Greifer.attach(4) // activate Servo mit pin Dv
 
-AccelStepper M1(1, A0, A1); // X Step / Dir
-AccelStepper M2(1, A6, A7); // Y Step / Dir
-AccelStepper M3(1, 46, 48); // Z Step / Dir
-AccelStepper M4(1, 26, 28); // E0 Step / Dir
-AccelStepper M5(1, 36, 34); // E1 Step / Dir
+AccelStepper M1(1, A0, A1); // X Step / Dir  ACHSE 4
+AccelStepper M2(1, A6, A7); // Y Step / Dir  ACHSE 5
+AccelStepper M3(1, 46, 48); // Z Step / Dir  ACHSE 2
+AccelStepper M4(1, 26, 28); // E0 Step / Dir ACHSE 3
+AccelStepper M5(1, 36, 34); // E1 Step / Dir ACHSE 1
 long M_dir = 0,Speed = 1;
 
 void setup() {
