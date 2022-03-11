@@ -1,5 +1,10 @@
 #include <AccelStepper.h> 
 #include <Servo.h>
+#include <SPI.h>
+#include <SD.h>
+
+
+File myFile;
 
 void Home_search();
 
@@ -118,6 +123,19 @@ Serial2.begin(115200);
   M3.setMaxSpeed(2000);
   M4.setMaxSpeed(2000);
   M5.setMaxSpeed(2000);
+
+    Serial.println("Initializing SD card...");
+  if(!SD.begin(53)){
+ Serial.println("Initializing SD Failed!...");
+ return;
+ }
+ Serial.println("Initializing Successful!");
+
+ Serial.println("Creating File!");
+  myFile = SD.open("testlog.txt", FILE_WRITE);
+  myFile.close();
+
+ Serial.println("File Created!");
 
 }
 
@@ -305,5 +323,41 @@ if(Serial2.available()){
   }
   
   }
+  if(bitRead(M_dir,24)&& bitRead(M_dir,31)==0){
+  if(SD.exists("testlog.txt")){
+    Serial.println("File Exists!");
+    myFile = SD.open("testlog.txt", FILE_WRITE);
+
+    if(myFile){
+    Serial.println("File can Be Written TO!");
+    myFile.println(M1.currentPosition());
+    myFile.println(M2.currentPosition());
+    myFile.println(M3.currentPosition());
+    myFile.println(M4.currentPosition());
+    myFile.println(M5.currentPosition());
+    myFile.close();
+    }else{Serial.println("File can not Be Written TO!");
+    }
+    }else{
+      Serial.println("File Dosen´t Exist!");
+      }
+      delay(2500);
+  }
+  if(bitRead(M_dir,25)&& bitRead(M_dir,31)==0){
+      
+      myFile = SD.open("testlog.txt");
+      if(myFile){
+        Serial.println("File can Be read!");
+        while(myFile.available()){
+        Serial.write(myFile.read());
+        }
+        myFile.close();
+        }
+    else{Serial.println("File can not Be read!");}
+    delay(2500);
+    }
+    
+  
 }
 }
+

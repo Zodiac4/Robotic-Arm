@@ -4,7 +4,7 @@
 #define RXD2        16
 #define TXD2        17
 
-long M1,M2,M3,M4,M5,Speed,Servom = 1;
+long M1,M2,M3,M4,M5,Speed,Servom = 1,Speicher;
 long h_pos = 0;
 bool UP=0,Down=0;
 
@@ -12,7 +12,7 @@ void setup() {
   // Serial.begin(baud-rate, potocol, RX pin, TX pin);
   Serial.begin(115200, SERIAL_8N1, RXD2, TXD2);
 
-  Ps3.begin("7c:9e:bd:62:a0:3e");
+  Ps3.begin("f0:f0:02:3b:f1:c7");
 
   Serial.println("PS3 Ready.");
   pinMode(ONBOARD_LED, OUTPUT);
@@ -138,5 +138,14 @@ Down = Ps3.event.button_down.down;
     Serial.println(h_pos);
     //delay(5);
     }
-  
+  if(abs(Ps3.event.analog_changed.button.right)){
+    bitSet(Speicher, 24);
+    Serial.println(Speicher);
+  }
+  if(abs(Ps3.event.analog_changed.button.left)){
+      bitSet(Speicher, 25);
+      Serial.println(Speicher);
+  }
+
 }
+ 
