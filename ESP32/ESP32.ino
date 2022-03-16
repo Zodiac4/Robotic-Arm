@@ -138,14 +138,16 @@ Down = Ps3.event.button_down.down;
     Serial.println(h_pos);
     //delay(5);
     }
-  if(abs(Ps3.event.analog_changed.button.right)){
+  if(abs(Ps3.event.button_down.right)) {
     bitSet(Speicher, 24);
     Serial.println(Speicher);
+    bitClear(Speicher, 24);
   }
-  if(abs(Ps3.event.analog_changed.button.left)){
+  if(abs(Ps3.event.button_down.left)){
       bitSet(Speicher, 25);
       Serial.println(Speicher);
+      bitClear(Speicher, 25);
   }
 
 }
- 
+         

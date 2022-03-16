@@ -323,6 +323,21 @@ if(Serial2.available()){
   }
   
   }
+
+  if(bitRead(M_dir,25)&& bitRead(M_dir,31)==0){
+      
+      myFile = SD.open("testlog.txt");
+      if(myFile){
+        Serial.println("File can Be read!");
+        while(myFile.available()){
+        Serial.write(myFile.read());
+        }
+        myFile.close();
+        }
+    else{Serial.println("File can not Be read!");}
+ delay(2000);
+    }
+  
   if(bitRead(M_dir,24)&& bitRead(M_dir,31)==0){
   if(SD.exists("testlog.txt")){
     Serial.println("File Exists!");
@@ -341,22 +356,9 @@ if(Serial2.available()){
     }else{
       Serial.println("File Dosen´t Exist!");
       }
-      delay(2500);
+      delay(2000);
   }
-  if(bitRead(M_dir,25)&& bitRead(M_dir,31)==0){
-      
-      myFile = SD.open("testlog.txt");
-      if(myFile){
-        Serial.println("File can Be read!");
-        while(myFile.available()){
-        Serial.write(myFile.read());
-        }
-        myFile.close();
-        }
-    else{Serial.println("File can not Be read!");}
-    delay(2500);
-    }
-    
+   
   
 }
 }
