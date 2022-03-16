@@ -23,7 +23,8 @@ AccelStepper M2(1, A6, A7); // Y Step / Dir  ACHSE 5
 AccelStepper M3(1, 46, 48); // Z Step / Dir  ACHSE 2
 AccelStepper M4(1, 26, 28); // E0 Step / Dir ACHSE 3
 AccelStepper M5(1, 36, 34); // E1 Step / Dir ACHSE 1
-long M_dir = 0,Speed = 1;
+long M_dir = 0,Speed = 1,Count = 0,Pos = 0;
+long M1Array[10] = {0},M2Array[10] = {0},M3Array[10] = {0},M4Array[10] = {0},M5Array[10] = {0};
 
 void setup() {
   pinMode(X_EN, OUTPUT);
@@ -330,13 +331,29 @@ if(Serial2.available()){
       if(myFile){
         Serial.println("File can Be read!");
         while(myFile.available()){
-        Serial.write(myFile.read());
+        Count++;
+        if(Count == 1){
+            M1Array[Pos] = Serial.write(myFile.read());
+        }
+        if(Count == 2){
+            M1Array[Pos] = Serial.write(myFile.read());
+        }
+        if(Count == 3){
+            M1Array[Pos] = Serial.write(myFile.read());
+        }
+        if(Count == 4){
+            M1Array[Pos] = Serial.write(myFile.read());
+        }
+        if(Count == 5){
+            M1Array[Pos] = Serial.write(myFile.read());
+          Count = 0;
+          Pos++;
+        }
         }
         myFile.close();
         bitClear(M_dir, 25);
         }
     else{Serial.println("File can not Be read!");}
- delay(2000);
     }
   
   if(bitRead(M_dir,24)&& bitRead(M_dir,31)==0){
@@ -358,7 +375,6 @@ if(Serial2.available()){
     }else{
       Serial.println("File Dosen´t Exist!");
       }
-      delay(2000);
   }
    
   
