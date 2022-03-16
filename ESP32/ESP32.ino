@@ -6,7 +6,7 @@
 
 long M1,M2,M3,M4,M5,Speed,Servom = 1,Speicher;
 long h_pos = 0;
-bool UP=0,Down=0;
+bool UP=0,Down=0,Rechts=0,Links=0;
 
 void setup() {
   // Serial.begin(baud-rate, potocol, RX pin, TX pin);
@@ -138,16 +138,17 @@ Down = Ps3.event.button_down.down;
     Serial.println(h_pos);
     //delay(5);
     }
-  if(abs(Ps3.event.button_down.right)) {
+  if(abs(Ps3.event.button_down.right) && Rechts == 0) {
     bitSet(Speicher, 24);
     Serial.println(Speicher);
     bitClear(Speicher, 24);
   }
-  if(abs(Ps3.event.button_down.left)){
+  if(abs(Ps3.event.button_down.left) && Links == 0){
       bitSet(Speicher, 25);
       Serial.println(Speicher);
       bitClear(Speicher, 25);
   }
-
+Rechts = Ps3.event.button_down.right;
+Links = Ps3.event.button_down.left;
 }
          

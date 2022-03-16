@@ -333,6 +333,7 @@ if(Serial2.available()){
         Serial.write(myFile.read());
         }
         myFile.close();
+        bitClear(M_dir, 25);
         }
     else{Serial.println("File can not Be read!");}
  delay(2000);
@@ -351,6 +352,7 @@ if(Serial2.available()){
     myFile.println(M4.currentPosition());
     myFile.println(M5.currentPosition());
     myFile.close();
+    bitClear(M_dir, 24);
     }else{Serial.println("File can not Be Written TO!");
     }
     }else{
