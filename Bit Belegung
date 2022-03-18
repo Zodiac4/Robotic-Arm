@@ -1,24 +1,24 @@
 Bit 0-7 Signal
 
-BIT 8    =
-BIT 9    =
-BIT 10   =
+BIT 8    = Achse 4 (M1)
+BIT 9    = 
+BIT 10   = Achse 5 (M2)
 BIT 11   =
-BIT 12   =
+BIT 12   = Achse 2 (M3)
 BIT 13   =
-BIT 14   =
+BIT 14   = Achse 3 (M4)
 BIT 15   =
-BIT 16   =
+BIT 16   = Speed
 BIT 17   =
-BIT 18   =
+BIT 18   = Achse 1 (M5)
 BIT 19   =
-BIT 20   =
+BIT 20   = Home
 BIT 21   =
-BIT 22   =
+BIT 22   = Greifer
 BIT 23   =
-BIT 24   =
-BIT 25   =
-BIT 26   =
+BIT 24   = Speicher
+BIT 25   = Speicher 
+BIT 26   =  
 BIT 27   =
 BIT 28   =
 BIT 29   =

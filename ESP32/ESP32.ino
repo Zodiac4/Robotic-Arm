@@ -16,6 +16,22 @@ void setup() {
 
   Serial.println("PS3 Ready.");
   pinMode(ONBOARD_LED, OUTPUT);
+
+
+while(h_pos != 3){
+  if(Ps3.event.button_down.start){
+    h_pos = 1;
+    Serial.println(h_pos);
+    //delay(5);
+    }
+    
+  if(Ps3.event.button_up.start){
+    h_pos = 0;
+    Serial.println(h_pos);
+    //delay(5);
+    }
+    h_pos = Serial.parseInt();
+}
 }
 
 void loop() {
@@ -120,24 +136,28 @@ Down = Ps3.event.button_down.down;
 
 /*__________________________________________________________________
                         Auto Home
-  __________________________________________________________________*/
-  if(Ps3.event.button_down.start)
+  __________________________________________________________________
+  if(Ps3.event.button_down.start){
     h_pos = 1;
     if(bitRead(h_pos,20)){
       bitClear(h_pos,20);
       }else{bitSet(h_pos, 20);
     Serial.println(h_pos);
     //delay(5);
-    }
+    }}
   
-  if(Ps3.event.button_up.start)
+  if(Ps3.event.button_up.start){
     h_pos = 0;
     if(bitRead(h_pos,20)){
       bitClear(h_pos,20);
       }else{bitSet(h_pos, 20);
     Serial.println(h_pos);
     //delay(5);
-    }
+    }}
+
+__________________________________________________________________
+                        Speicher
+  __________________________________________________________________*/
   if(abs(Ps3.event.button_down.right) && Rechts == 0) {
     bitSet(Speicher, 24);
     Serial.println(Speicher);

@@ -48,7 +48,7 @@ Serial2.begin(115200);
 
     long home_p = 0;
     long home_p_temp = 0;
-    long home_base = -1;
+    long home_base = -10;
 
     M1.setMaxSpeed(400);
     M1.setAcceleration(400);
@@ -58,12 +58,12 @@ Serial2.begin(115200);
     while(home_p != 1){
       home_p_temp = Serial2.parseInt();
       
-      
+      /*
       if((bitRead(home_p_temp,20)&& bitRead(home_p_temp,31)==0) or ((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,31))){
       if((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,31)){
       bitSet(home_p_temp, 20);
       }else{bitClear(home_p_temp,20);}
-      
+      */
       //Serial.println(home_p_temp);
       if(home_p_temp == 0 or home_p_temp == 1){
         home_p = home_p_temp;
@@ -71,17 +71,17 @@ Serial2.begin(115200);
       
       //Serial.println(home_p);
       M1.moveTo(home_base);
-      home_base--;
+      home_base = home_base - 10;
       //Serial.println(home_base);
       M1.run();
       delay(10);
       }
-    }
+    
 
     M1.setCurrentPosition(0);
     delay(3000);
     Serial.print("Turn 2");
-    home_base = 1;
+    home_base = 10;
     //home_p = 0;
     //home_p_temp = 0;
     
@@ -91,24 +91,19 @@ Serial2.begin(115200);
     while(home_p != 1){
         home_p_temp = Serial2.parseInt();
         //Serial.println(home_p_temp);
-        
-        if((bitRead(home_p_temp,20)&& bitRead(home_p_temp,31)==0) or ((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,31))){
-        if((bitRead(home_p_temp,20) == 0) && bitRead(home_p_temp,31)){
-        bitSet(home_p_temp, 20);
-        }else{bitClear(home_p_temp,20);}
-        
-        
+
         home_p = home_p_temp;
-      }
+      
       
       Serial.println(home_p);
       M1.moveTo(home_base);
-      home_base++;
+      home_base = home_base + 10;
       Serial.println(home_base);
       M1.run();
       delay(10);
       }
     
+    Serial2.println(3);  // Abbrechen der While Schleife im ESP32
 
     M1.setCurrentPosition(0);
     Serial.print("Home Position eingestellt!");
@@ -154,7 +149,7 @@ if(Serial2.available()){
 
 /*
                           Home
-*/
+
 
     if((bitRead(M_dir,20)&& bitRead(M_dir,31)==0) or ((bitRead(M_dir,20) == 0) && bitRead(M_dir,31))){
     if((bitRead(M_dir,20) == 0) && bitRead(M_dir,31)){
@@ -168,7 +163,7 @@ if(Serial2.available()){
       M4.stop();
     }
     }
-/*
+
                             Speed
 */
 
@@ -299,8 +294,8 @@ if(Serial2.available()){
 -------------------------------------------------
                   Zurück zu Home
 ---------------------------------------------------*/
-  if((bitRead(M_dir,20)&& bitRead(M_dir,21)==0) or ((bitRead(M_dir,20) == 0) && bitRead(M_dir,21))){
-    if((bitRead(M_dir,20) == 0) && bitRead(M_dir,21)){
+  if((bitRead(M_dir,20)&& bitRead(M_dir,31)==0) or ((bitRead(M_dir,20) == 0) && bitRead(M_dir,31))){
+    if((bitRead(M_dir,20) == 0) && bitRead(M_dir,31)){
       bitSet(M_dir, 20);
     }else{bitClear(M_dir,20);}
 
@@ -380,4 +375,3 @@ if(Serial2.available()){
   
 }
 }
-
