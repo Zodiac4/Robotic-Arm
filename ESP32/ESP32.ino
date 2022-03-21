@@ -47,7 +47,7 @@ void loop() {
       bitClear(h_pos,20);
       }
 
-    h_pos = Serial.parseInt();
+    h_pos = Serial.parseInt(); // evtl nicht benötigt
 
     if(bitRead(h_pos,21)&& bitRead(h_pos,31)==0){
       bitClear(h_pos, 21);
