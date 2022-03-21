@@ -324,24 +324,6 @@ if(Serial2.available()){
         }
         }
       
-      if(bitRead(M_dir,24)&& bitRead(M_dir,31)==0){
-      if(SD.exists("testlog.txt")){
-        Serial.println("File Exists!");
-        myFile = SD.open("testlog.txt", FILE_WRITE);
-
-        if(myFile){
-        Serial.println("File can Be Written TO!");
-        myFile.println(M1.currentPosition());
-        myFile.println(M2.currentPosition());
-        myFile.println(M3.currentPosition());
-        myFile.println(M4.currentPosition());
-        myFile.println(M5.currentPosition());
-        myFile.close();
-        bitClear(M_dir, 24);
-        }else{Serial.println("File can not Be Written TO!");
-        }
-    else{Serial.println("File can not Be read!");}
-    }
   
   if(bitRead(M_dir,24)&& bitRead(M_dir,31)==0){
   if(SD.exists("testlog.txt")){
