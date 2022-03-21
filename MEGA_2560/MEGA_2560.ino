@@ -299,6 +299,7 @@ if(Serial2.available()){
         M4.stop();
         M5.stop();
       }
+      }
       
       myFile = SD.open("testlog.txt");
       if(myFile){
@@ -323,6 +324,7 @@ if(Serial2.available()){
           Pos++;
         }
         }
+      }
       
   
   if(bitRead(M_dir,24)&& bitRead(M_dir,31)==0){
