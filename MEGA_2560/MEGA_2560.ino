@@ -301,7 +301,7 @@ if(Serial2.available()){
       }
     
 
-  if(bitRead(M_dir,25)&& bitRead(M_dir,31)==0){
+    if(bitRead(M_dir,25)&& bitRead(M_dir,31)==0){
       
       myFile = SD.open("testlog.txt");
       if(myFile){
@@ -309,30 +309,48 @@ if(Serial2.available()){
         while(myFile.available()){
         Count++;
         if(Count == 1){
-            M1Array[Pos] = Serial.write(myFile.read());
+            M1Array[Pos] = myFile.parseInt();
+            Serial.println(M1Array[Pos]);
         }
         if(Count == 2){
-            M2Array[Pos] = Serial.write(myFile.read());
+            M2Array[Pos] = myFile.parseInt();
+            Serial.println(M2Array[Pos]);
         }
         if(Count == 3){
-            M3Array[Pos] = Serial.write(myFile.read());
+            M3Array[Pos] = myFile.parseInt();
+            Serial.println(M3Array[Pos]);
         }
         if(Count == 4){
-            M4Array[Pos] = Serial.write(myFile.read());
+            M4Array[Pos] = myFile.parseInt();
+            Serial.println(M4Array[Pos]);
         }
         if(Count == 5){
-            M5Array[Pos] = Serial.write(myFile.read());
+            M5Array[Pos] = myFile.parseInt();
+            Serial.println(M5Array[Pos]);
           Count = 0;
           Pos++;
-          Serial.println(M1Array[1],M2Array[1],M3Array[1],M4Array[1],M5Array[1]);
         }
         }
         myFile.close();
+       /*for(i=0;i<10;i++){
+        while((M1.currentPosition() != M1Array[Pos] && M2.currentPosition() != M2Array[Pos] && M3.currentPosition() != M3Array[Pos] && M4.currentPosition() != M4Array[Pos] && M5.currentPosition() != M5Array[Pos] )&&  M1Array[Pos] != NULL){
+              M1.moveTo(M1Array[Pos]);
+              M1.setSpeed(2000);
+              M2.moveTo(M2Array[Pos]);
+              M2.setSpeed(2000);
+              M3.moveTo(M3Array[Pos]);
+              M3.setSpeed(2000);
+              M4.moveTo(M4Array[Pos]);
+              M4.setSpeed(2000);
+              M5.moveTo(M5Array[Pos]);
+              M5.setSpeed(2000);
+              Serial.println("Roboter Bewegt sich selbst");
+          }}*/
+        
         bitClear(M_dir, 25);
-      }
-      else{Serial.println("File can not Be read!");}
-      }
-      
+        }
+    else{Serial.println("File can not Be read!");}
+    }
   
   if(bitRead(M_dir,24)&& bitRead(M_dir,31)==0){
   if(SD.exists("testlog.txt")){
