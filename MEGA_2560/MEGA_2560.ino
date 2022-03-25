@@ -299,7 +299,9 @@ if(Serial2.available()){
         M4.stop();
         M5.stop();
       }
-      }
+    
+
+  if(bitRead(M_dir,25)&& bitRead(M_dir,31)==0){
       
       myFile = SD.open("testlog.txt");
       if(myFile){
@@ -310,20 +312,25 @@ if(Serial2.available()){
             M1Array[Pos] = Serial.write(myFile.read());
         }
         if(Count == 2){
-            M1Array[Pos] = Serial.write(myFile.read());
+            M2Array[Pos] = Serial.write(myFile.read());
         }
         if(Count == 3){
-            M1Array[Pos] = Serial.write(myFile.read());
+            M3Array[Pos] = Serial.write(myFile.read());
         }
         if(Count == 4){
-            M1Array[Pos] = Serial.write(myFile.read());
+            M4Array[Pos] = Serial.write(myFile.read());
         }
         if(Count == 5){
-            M1Array[Pos] = Serial.write(myFile.read());
+            M5Array[Pos] = Serial.write(myFile.read());
           Count = 0;
           Pos++;
+          Serial.println(M1Array[1],M2Array[1],M3Array[1],M4Array[1],M5Array[1]);
         }
         }
+        myFile.close();
+        bitClear(M_dir, 25);
+      }
+      else{Serial.println("File can not Be read!");}
       }
       
   
@@ -349,5 +356,6 @@ if(Serial2.available()){
   }
    
   }
+}
 }
 }
