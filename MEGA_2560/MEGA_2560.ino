@@ -24,6 +24,8 @@ AccelStepper M5(1, 36, 34); // E1 Step / Dir ACHSE 1
 long M_dir = 0,Speed = 1,Count = 0,Pos = 0;
 long M1Array[10] = {0},M2Array[10] = {0},M3Array[10] = {0},M4Array[10] = {0},M5Array[10] = {0};
 long setup_num = 0;
+long home_base = -100;
+long home_p = 0,home_p_temp = 0;
 
 void setup() {
   pinMode(X_EN, OUTPUT);
@@ -60,6 +62,7 @@ void setup() {
 
   Serial.println("File Created!");
 
+
 }
 
 void loop() {
@@ -71,15 +74,12 @@ if(Serial2.available()){
                             HOME POS
       ______________________________________________________________________________________*/
 
-    long home_p = 0,home_p_temp = 0;
-    long home_base = -100;
-
     M1.setMaxSpeed(600);
     M1.setAcceleration(600);
     
     Serial.print("Home Position wird gesucht...");
 
-    while(home_p_temp != 20 && setup_num == 0){
+    if(home_p_temp != 20 && setup_num == 0){
       home_p = Serial2.parseInt();
       
       
@@ -97,21 +97,22 @@ if(Serial2.available()){
         //delay(5);
         
       }
-      
-    setup_num = 1;
-    home_p_temp = 0;
-    M1.setCurrentPosition(0);
-    Serial.print("Turn 2");
-    home_base = 100;
+
+    if(home_p_temp == 20){
+      setup_num = 1;
+      home_p_temp = 0;
+      M1.setCurrentPosition(0);
+      Serial.print("Turn 2");
+      home_base = 100;
+    }
+    
     //home_p = 0;
     //home_p_temp = 0;
     
     //Serial.println(home_p);
     
     
-    Serial.print("Home Position wird gesucht...");
-
-    while(home_p_temp != 20 && setup_num == 1){
+    if(home_p_temp != 20 && setup_num == 1){
       home_p = Serial2.parseInt();
       
       
@@ -130,18 +131,22 @@ if(Serial2.available()){
         
       }
 
-    setup_num = 3;
-    bitSet(setup_num,21);
-    Serial2.println(setup_num);  // Abbrechen des Setups im ESP32
-    bitClear(setup_num,21);
+    if(home_p_temp == 20 && setup_num == 1){
+      setup_num = 3;
+      bitSet(setup_num,21);
+      Serial2.println(setup_num);  // Abbrechen des Setups im ESP32
+      bitClear(setup_num,21);
 
-    M1.setCurrentPosition(0);
-    Serial.print("Home Position eingestellt!");
+      M1.setCurrentPosition(0);
+      Serial.print("Home Position eingestellt!");
+      setup_num = 4;
+    }
+    
 
   /*________________________________________________________________________________________
                             HOME POS ENDE
     ______________________________________________________________________________________*/
-    setup_num = 4;
+    
 
   }if(setup_num == 4){
     M_dir = Serial2.parseInt();
