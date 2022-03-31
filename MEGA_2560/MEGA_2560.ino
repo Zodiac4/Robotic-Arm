@@ -68,7 +68,7 @@ void setup() {
 void loop() {
 M_dir = 0;
 if(Serial2.available()){
-
+  Serial.print("adsadsadsadasd");
   if(setup_num == 0){
     /*________________________________________________________________________________________
                             HOME POS
@@ -304,8 +304,8 @@ if(Serial2.available()){
         M4.stop();
         M5.stop();
       }
-    
-
+      }
+/*
   if(bitRead(M_dir,25)&& bitRead(M_dir,31)==0){
       
       myFile = SD.open("testlog.txt");
@@ -358,9 +358,8 @@ if(Serial2.available()){
     }else{
       Serial.println("File Dosen´t Exist!");
       }
-  }
+  }*/
    
   }
-}
 }
 }
