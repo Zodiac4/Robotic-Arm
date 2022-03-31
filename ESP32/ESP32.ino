@@ -22,16 +22,15 @@ void setup() {
 }
 
 void loop() {
-  if(!Ps3.isConnected()){
-    setup_num = 0;
-        return;}
-
+  if(!Ps3.isConnected())
+        return;
+  //Serial.println(setup_num);
   /*__________________________________________________________________
                         Home Setup
   __________________________________________________________________*/
 
   if(setup_num < 2){
-    
+    //Serial.println("if");
     if(Ps3.event.button_down.start){
       h_pos = 20;
       bitSet(h_pos, 20);
@@ -47,13 +46,13 @@ void loop() {
       bitClear(h_pos,20);
       }
 
-    h_pos = Serial.parseInt(); // evtl nicht benötigt
+    //h_pos = Serial.parseInt(); // evtl nicht benötigt
 
     if(bitRead(h_pos,21)&& bitRead(h_pos,31)==0){
       bitClear(h_pos, 21);
-      setup_num = h_pos;
+      //setup_num = h_pos;
     }
-    delay(200);
+    
   }if(setup_num > 1){
 
     /*__________________________________________________________________
