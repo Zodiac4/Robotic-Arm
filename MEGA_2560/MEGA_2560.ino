@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include <AccelStepper.h> 
 #include <Servo.h>
 #include <SPI.h>
@@ -5,6 +6,7 @@
 
 
 File myFile;
+Servo myservo;
 
 #define X_EN    38
 #define Y_EN    A2
@@ -13,8 +15,9 @@ File myFile;
 #define E1_EN    30
 #define RX        0
 #define TX        1
+#define Ser   4
 
-//Greifer.attach(4) // activate Servo mit pin Dv
+
 
 AccelStepper M1(1, A0, A1); // X Step / Dir  ACHSE 4
 AccelStepper M2(1, A6, A7); // Y Step / Dir  ACHSE 5
@@ -23,7 +26,7 @@ AccelStepper M4(1, 26, 28); // E0 Step / Dir ACHSE 3
 AccelStepper M5(1, 36, 34); // E1 Step / Dir ACHSE 1
 long M_dir = 0,Speed = 1,Count = 0,Pos = 0;
 long M1Array[10] = {0},M2Array[10] = {0},M3Array[10] = {0},M4Array[10] = {0},M5Array[10] = {0};
-long setup_num = 0;
+long home_num = 0;
 
 void setup() {
   pinMode(X_EN, OUTPUT);
@@ -31,16 +34,19 @@ void setup() {
   pinMode(Z_EN, OUTPUT);
   pinMode(E0_EN, OUTPUT);
   pinMode(E1_EN, OUTPUT);
+  pinMode(Ser, OUTPUT);
   digitalWrite(X_EN, LOW);
   digitalWrite(Y_EN, LOW);
   digitalWrite(Z_EN, LOW);
   digitalWrite(E0_EN, LOW);
   digitalWrite(E1_EN, LOW);
-  
+  digitalWrite(Ser, LOW);
 
   Serial.begin(74880);
   Serial2.begin(115200);
 
+  myservo.attach(4);
+  
   M1.setMaxSpeed(2000);
   M2.setMaxSpeed(2000);
   M3.setMaxSpeed(2000);
@@ -60,90 +66,12 @@ void setup() {
 
   Serial.println("File Created!");
 
+
 }
 
 void loop() {
 M_dir = 0;
 if(Serial2.available()){
-
-  if(setup_num == 0){
-    /*________________________________________________________________________________________
-                            HOME POS
-      ______________________________________________________________________________________*/
-
-    long home_p = 0,home_p_temp = 0;
-    long home_base = -100;
-
-    M1.setMaxSpeed(600);
-    M1.setAcceleration(600);
-    
-    Serial.print("Home Position wird gesucht...");
-
-    while(home_p_temp != 20 && setup_num == 0){
-      home_p = Serial2.parseInt();
-      
-      
-      if(bitRead(home_p,20)&& bitRead(home_p,31)==0){
-        bitClear(home_p,20);
-        home_p_temp = home_p;
-        Serial.println(home_p);
-        }
-        
-        //Serial.println(home_p);
-        M1.moveTo(home_base);
-        home_base = home_base - 100;
-        Serial.println(home_base);
-        M1.run();
-        //delay(5);
-        
-      }
-      
-    setup_num = 1;
-    home_p_temp = 0;
-    M1.setCurrentPosition(0);
-    Serial.print("Turn 2");
-    home_base = 100;
-    //home_p = 0;
-    //home_p_temp = 0;
-    
-    //Serial.println(home_p);
-    
-    
-    Serial.print("Home Position wird gesucht...");
-
-    while(home_p_temp != 20 && setup_num == 1){
-      home_p = Serial2.parseInt();
-      
-      
-      if(bitRead(home_p,20)&& bitRead(home_p,31)==0){
-        bitClear(home_p,20);
-        home_p_temp = home_p;
-        Serial.println(home_p);
-        }
-        
-        //Serial.println(home_p);
-        M1.moveTo(home_base);
-        home_base = home_base + 100;
-        Serial.println(home_base);
-        M1.run();
-        //delay(5);
-        
-      }
-
-    setup_num = 3;
-    bitSet(setup_num,21);
-    Serial2.println(setup_num);  // Abbrechen des Setups im ESP32
-    bitClear(setup_num,21);
-
-    M1.setCurrentPosition(0);
-    Serial.print("Home Position eingestellt!");
-
-  /*________________________________________________________________________________________
-                            HOME POS ENDE
-    ______________________________________________________________________________________*/
-    setup_num = 4;
-
-  }if(setup_num == 4){
     M_dir = Serial2.parseInt();
     /*
                                 Speed
@@ -264,44 +192,73 @@ if(Serial2.available()){
 
     /*-------------------------------------------------
                       Servo Greifer
-    -------------------------------------------------
-        if((bitRead(M_dir,22)&& bitRead(M_dir,23)==0) or ((bitRead(M_dir,22) == 0) && bitRead(M_dir,23))){
-        if((bitRead(M_dir,22) == 0) && bitRead(M_dir,23)){
-          bitSet(M_dir, 22);
-        }else{bitClear(M_dir,22);}
-        
-          Greifer.write(M_dir);
-
+    -------------------------------------------------*/
+        if(bitRead(M_dir,22) && bitRead(M_dir,31) == 0){
+        bitClear(M_dir, 22);
+          if(M_dir < 0){
+            myservo.write(M_dir);
+            }
+          if(M_dir > 0){
+            myservo.write(M_dir);
+            }
         }
-    -------------------------------------------------
+
+
+    /*-------------------------------------------------
+                      Home einstellen
+    ---------------------------------------------------*/
+
+      if(bitRead(M_dir,20) && bitRead(M_dir,31) == 0 && home_num != 1){
+        bitClear(M_dir, 20);
+        M5.setCurrentPosition(0);
+        M3.setCurrentPosition(0);
+        M4.setCurrentPosition(0);
+        M1.setCurrentPosition(0);
+        M2.setCurrentPosition(0);
+        home_num = 1;
+        Serial.println("0 Position gesetzt");
+      }
+
+    /*-------------------------------------------------
                       Zurück zu Home
     ---------------------------------------------------*/
-      if((bitRead(M_dir,20)&& bitRead(M_dir,31)==0) or ((bitRead(M_dir,20) == 0) && bitRead(M_dir,31))){
-        if((bitRead(M_dir,20) == 0) && bitRead(M_dir,31)){
-          bitSet(M_dir, 20);
-        }else{bitClear(M_dir,20);}
-
-      if(M_dir == 1){
-        M1.moveTo(0);
-        M1.setSpeed(1000);
-        M2.moveTo(0);
-        M2.setSpeed(1000);
-        M3.moveTo(0);
-        M3.setSpeed(1000);
-        M4.moveTo(0);
-        M4.setSpeed(1000);
-        M5.moveTo(0);
-        M5.setSpeed(1000);
-      }else if(M_dir == 0){
-        M1.stop();
-        M2.stop();
-        M3.stop();
-        M4.stop();
-        M5.stop();
+      if(bitRead(M_dir,20) && bitRead(M_dir,31) == 0 && home_num == 1){
+        bitClear(M_dir, 20);
+        Serial.println("Gehe zurück zur 0 Position!");
+        while(M5.currentPosition() != 0){
+          M5.setSpeed(800);
+          M5.moveTo(-M5.currentPosition());
+          Serial.println(M5.currentPosition());
+          }
+        while(M3.currentPosition() != 0){
+          M3.setSpeed(800);
+          M3.moveTo(-M3.currentPosition());
+          Serial.println(M3.currentPosition());
+          }
+        while(M4.currentPosition() != 0){
+          M4.setSpeed(800);
+          M4.moveTo(-M4.currentPosition());
+          Serial.println(M4.currentPosition());
+          }
+        while(M1.currentPosition() != 0){
+          M1.setSpeed(800);
+          M1.moveTo(-M1.currentPosition());
+          Serial.println(M1.currentPosition());
+          }
+        while(M2.currentPosition() != 0){
+          M2.setSpeed(800);
+          M2.moveTo(-M2.currentPosition());
+          Serial.println(M2.currentPosition());
+          }
       }
-    
 
+<<<<<<< HEAD
     if(bitRead(M_dir,25)&& bitRead(M_dir,31)==0){
+=======
+      
+/*
+  if(bitRead(M_dir,25)&& bitRead(M_dir,31)==0){
+>>>>>>> 0cf7aecaa0bf4c8b06654ecdc885afd649a4a6a0
       
       myFile = SD.open("testlog.txt");
       if(myFile){
@@ -371,9 +328,7 @@ if(Serial2.available()){
     }else{
       Serial.println("File Dosen´t Exist!");
       }
-  }
+  }*/
    
   }
-}
-}
 }

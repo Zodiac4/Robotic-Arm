@@ -6,7 +6,6 @@
 
 long M1,M2,M3,M4,M5,Speed,Servom = 1,Speicher;
 long h_pos = 0;
-long setup_num = 0;
 bool UP=0,Down=0,Rechts=0,Links=0;
 
 void setup() {
@@ -18,43 +17,11 @@ void setup() {
   Serial.println("PS3 Ready.");
   pinMode(ONBOARD_LED, OUTPUT);
 
-  setup_num = 0;
 }
 
 void loop() {
-  if(!Ps3.isConnected()){
-    setup_num = 0;
-        return;}
-
-  /*__________________________________________________________________
-                        Home Setup
-  __________________________________________________________________*/
-
-  if(setup_num < 2){
-    
-    if(Ps3.event.button_down.start){
-      h_pos = 20;
-      bitSet(h_pos, 20);
-      Serial.println(h_pos);
-      bitClear(h_pos,20);
-      setup_num++;
-      }
-      
-    if(Ps3.event.button_up.start){
-      h_pos = 10;
-      bitSet(h_pos, 20);
-      Serial.println(h_pos);
-      bitClear(h_pos,20);
-      }
-
-    h_pos = Serial.parseInt(); // evtl nicht benötigt
-
-    if(bitRead(h_pos,21)&& bitRead(h_pos,31)==0){
-      bitClear(h_pos, 21);
-      setup_num = h_pos;
-    }
-    delay(200);
-  }if(setup_num > 1){
+  if(!Ps3.isConnected())
+        return;
 
     /*__________________________________________________________________
                             Motoren
@@ -185,5 +152,5 @@ void loop() {
       Rechts = Ps3.event.button_down.right;
       Links = Ps3.event.button_down.left;
   }
-}
+
          
