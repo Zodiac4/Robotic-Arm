@@ -73,6 +73,7 @@ void loop() {
 M_dir = 0;
 if(Serial2.available()){
     M_dir = Serial2.parseInt();
+    //Serial.println(M_dir);
     /*
                                 Speed
     */
@@ -193,13 +194,18 @@ if(Serial2.available()){
     /*-------------------------------------------------
                       Servo Greifer
     -------------------------------------------------*/
-        if(bitRead(M_dir,22) && bitRead(M_dir,31) == 0){
-        bitClear(M_dir, 22);
+        if((bitRead(M_dir,22)&& bitRead(M_dir,31)==0) or ((bitRead(M_dir,22) == 0) && bitRead(M_dir,31))){
+        if((bitRead(M_dir,22) == 0) && bitRead(M_dir,31)){
+          bitSet(M_dir, 22);
+        }else{bitClear(M_dir,22);}
+        M_dir = map(M_dir,-255,255,0,90);
           if(M_dir < 0){
             myservo.write(M_dir);
+            delay(15);
             }
           if(M_dir > 0){
             myservo.write(M_dir);
+            delay(15);
             }
         }
 
@@ -221,7 +227,7 @@ if(Serial2.available()){
 
     /*-------------------------------------------------
                       Zurück zu Home
-    ---------------------------------------------------*/
+    ---------------------------------------------------
       if(bitRead(M_dir,20) && bitRead(M_dir,31) == 0 && home_num == 1){
         bitClear(M_dir, 20);
         Serial.println("Gehe zurück zur 0 Position!");
@@ -251,14 +257,8 @@ if(Serial2.available()){
           Serial.println(M2.currentPosition());
           }
       }
-
-<<<<<<< HEAD
+    
     if(bitRead(M_dir,25)&& bitRead(M_dir,31)==0){
-=======
-      
-/*
-  if(bitRead(M_dir,25)&& bitRead(M_dir,31)==0){
->>>>>>> 0cf7aecaa0bf4c8b06654ecdc885afd649a4a6a0
       
       myFile = SD.open("testlog.txt");
       if(myFile){
@@ -302,7 +302,7 @@ if(Serial2.available()){
               M5.moveTo(M5Array[Pos]);
               M5.setSpeed(2000);
               Serial.println("Roboter Bewegt sich selbst");
-          }}*/
+          }}
         
         bitClear(M_dir, 25);
         }
