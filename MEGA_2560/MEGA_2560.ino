@@ -24,7 +24,7 @@ AccelStepper M2(1, A6, A7); // Y Step / Dir  ACHSE 5
 AccelStepper M3(1, 46, 48); // Z Step / Dir  ACHSE 2
 AccelStepper M4(1, 26, 28); // E0 Step / Dir ACHSE 3
 AccelStepper M5(1, 36, 34); // E1 Step / Dir ACHSE 1
-long M_dir = 0,Speed = 1,Count = 0,Pos = 0;
+long M_dir = 0,Speed = 1,Count = 0,Pos = 0,Greifer = 0;
 long M1Array[10] = {0},M2Array[10] = {0},M3Array[10] = {0},M4Array[10] = {0},M5Array[10] = {0};
 long home_num = 0;
 
@@ -198,13 +198,13 @@ if(Serial2.available()){
         if((bitRead(M_dir,22) == 0) && bitRead(M_dir,31)){
           bitSet(M_dir, 22);
         }else{bitClear(M_dir,22);}
-        M_dir = map(M_dir,-255,255,0,90);
+        Greifer = map(M_dir,-255,255,0,90);
           if(M_dir < 0){
-            myservo.write(M_dir);
+            myservo.write(Greifer);
             delay(15);
             }
           if(M_dir > 0){
-            myservo.write(M_dir);
+            myservo.write(Greifer);
             delay(15);
             }
         }
