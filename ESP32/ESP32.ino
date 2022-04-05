@@ -12,7 +12,7 @@ void setup() {
   // Serial.begin(baud-rate, potocol, RX pin, TX pin);
   Serial.begin(115200, SERIAL_8N1, RXD2, TXD2);
 
-  Ps3.begin("7c:9e:bd:62:a0:3e");
+  Ps3.begin("f0:f0:02:3b:f1:c7");
 
   Serial.println("PS3 Ready.");
   pinMode(ONBOARD_LED, OUTPUT);
@@ -73,7 +73,7 @@ void loop() {
           if(bitRead(M5,18)){
             bitClear(M5,18);
             }else{bitSet(M5, 18);}
-          Serial.println(-M5);
+          Serial.println(M5);
           
       }
     /*__________________________________________________________________
@@ -92,7 +92,7 @@ void loop() {
           if(bitRead(Servom,22)){
             bitClear(Servom,22);
             }else{bitSet(Servom, 22);}
-            Serial.println(-Servom);
+            Serial.println(Servom);
       }
     /*__________________________________________________________________
                             Speed Controll

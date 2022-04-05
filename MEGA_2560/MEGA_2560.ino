@@ -47,11 +47,11 @@ void setup() {
 
   myservo.attach(4);
   
-  M1.setMaxSpeed(2000);
-  M2.setMaxSpeed(2000);
-  M3.setMaxSpeed(2000);
-  M4.setMaxSpeed(2000);
-  M5.setMaxSpeed(2000);
+  M1.setMaxSpeed(20000);
+  M2.setMaxSpeed(20000);
+  M3.setMaxSpeed(20000);
+  M4.setMaxSpeed(20000);
+  M5.setMaxSpeed(20000);
 
   Serial.println("Initializing SD card...");
   if(!SD.begin(53)){
@@ -73,6 +73,7 @@ void loop() {
 M_dir = 0;
 if(Serial2.available()){
     M_dir = Serial2.parseInt();
+    //Serial.println(M_dir);
     /*
                                 Speed
     */
@@ -98,11 +99,12 @@ if(Serial2.available()){
         //Serial.println(M_dir,DEC);
       if((M_dir > 20) && (M1.currentPosition() < 3000)){
         M1.moveTo(3000);
-        M1.setSpeed(M_dir * Speed);
+        M1.setSpeed(M_dir * Speed*5
+        );
         M1.run();
         }else if((M_dir < -20) && (-3000 < M1.currentPosition())) {
           M1.moveTo(-3000);
-          M1.setSpeed(M_dir * Speed);
+          M1.setSpeed(M_dir * Speed*5);
           M1.run();
           }else{
             M1.stop();
@@ -118,11 +120,11 @@ if(Serial2.available()){
         //Serial.println(M_dir,DEC);
       if((M_dir > 20) && (M2.currentPosition() < 3000)){
         M2.moveTo(3000);
-        M2.setSpeed(M_dir * Speed);
+        M2.setSpeed(M_dir * Speed*5);
         M2.run();
         }else if((M_dir < -20) && (-3000 < M2.currentPosition())) {
           M2.moveTo(-3000);
-          M2.setSpeed(M_dir * Speed);
+          M2.setSpeed(M_dir * Speed*5);
           M2.run();
           }else{
             M2.stop();
@@ -138,11 +140,11 @@ if(Serial2.available()){
         //Serial.println(M_dir,DEC);
       if((M_dir > 20) && (M3.currentPosition() < 3000)){
         M3.moveTo(3000);
-        M3.setSpeed(M_dir * Speed);
+        M3.setSpeed(M_dir * Speed*5);
         M3.run();
         }else if((M_dir < -20) && (-3000 < M3.currentPosition())) {
           M3.moveTo(-3000);
-          M3.setSpeed(M_dir * Speed);
+          M3.setSpeed(M_dir * Speed*5);
           M3.run();
           }else{
             M3.stop();
@@ -179,11 +181,11 @@ if(Serial2.available()){
         
       if((M_dir > 20) && (M5.currentPosition() < 3000)){
         M5.moveTo(3000);
-        M5.setSpeed(M_dir * Speed);
+        M5.setSpeed(M_dir * Speed*5);
         M5.run();
         }else if((M_dir < -20) && (-3000 < M5.currentPosition())) {
           M5.moveTo(-3000);
-          M5.setSpeed(M_dir * Speed);
+          M5.setSpeed(M_dir * Speed*5);
           M5.run();
           }else{
             M5.stop();
@@ -194,6 +196,7 @@ if(Serial2.available()){
                       Servo Greifer
     -------------------------------------------------*/
         if(bitRead(M_dir,22) && bitRead(M_dir,31) == 0){
+          Serial.println("Fehler 5");
         bitClear(M_dir, 22);
           if(M_dir < 0){
             myservo.write(M_dir);
@@ -210,6 +213,7 @@ if(Serial2.available()){
 
       if(bitRead(M_dir,20) && bitRead(M_dir,31) == 0 && home_num != 1){
         bitClear(M_dir, 20);
+        Serial.println("Fehler 4");
         M5.setCurrentPosition(0);
         M3.setCurrentPosition(0);
         M4.setCurrentPosition(0);
@@ -222,44 +226,39 @@ if(Serial2.available()){
     /*-------------------------------------------------
                       Zurück zu Home
     ---------------------------------------------------*/
-      if(bitRead(M_dir,20) && bitRead(M_dir,31) == 0 && home_num == 1){
+      /*if((bitRead(M_dir,20) && bitRead(M_dir,31) == 0) && home_num == 1){
+        Serial.println("Fehler 1");
         bitClear(M_dir, 20);
         Serial.println("Gehe zurück zur 0 Position!");
         while(M5.currentPosition() != 0){
           M5.setSpeed(800);
           M5.moveTo(-M5.currentPosition());
-          Serial.println(M5.currentPosition());
+          //Serial.println(M5.currentPosition());
           }
         while(M3.currentPosition() != 0){
           M3.setSpeed(800);
           M3.moveTo(-M3.currentPosition());
-          Serial.println(M3.currentPosition());
+          //Serial.println(M3.currentPosition());
           }
         while(M4.currentPosition() != 0){
           M4.setSpeed(800);
           M4.moveTo(-M4.currentPosition());
-          Serial.println(M4.currentPosition());
+          //Serial.println(M4.currentPosition());
           }
         while(M1.currentPosition() != 0){
           M1.setSpeed(800);
           M1.moveTo(-M1.currentPosition());
-          Serial.println(M1.currentPosition());
+          //Serial.println(M1.currentPosition());
           }
         while(M2.currentPosition() != 0){
           M2.setSpeed(800);
           M2.moveTo(-M2.currentPosition());
-          Serial.println(M2.currentPosition());
+          //Serial.println(M2.currentPosition());
           }
-      }
+      }*/
 
-<<<<<<< HEAD
     if(bitRead(M_dir,25)&& bitRead(M_dir,31)==0){
-=======
-      
-/*
-  if(bitRead(M_dir,25)&& bitRead(M_dir,31)==0){
->>>>>>> 0cf7aecaa0bf4c8b06654ecdc885afd649a4a6a0
-      
+      Serial.println("Fehler 2");
       myFile = SD.open("testlog.txt");
       if(myFile){
         Serial.println("File can Be read!");
@@ -267,29 +266,29 @@ if(Serial2.available()){
         Count++;
         if(Count == 1){
             M1Array[Pos] = myFile.parseInt();
-            Serial.println(M1Array[Pos]);
+            //Serial.println(M1Array[Pos]);
         }
         if(Count == 2){
             M2Array[Pos] = myFile.parseInt();
-            Serial.println(M2Array[Pos]);
+            //Serial.println(M2Array[Pos]);
         }
         if(Count == 3){
             M3Array[Pos] = myFile.parseInt();
-            Serial.println(M3Array[Pos]);
+            //Serial.println(M3Array[Pos]);
         }
         if(Count == 4){
             M4Array[Pos] = myFile.parseInt();
-            Serial.println(M4Array[Pos]);
+            //Serial.println(M4Array[Pos]);
         }
         if(Count == 5){
             M5Array[Pos] = myFile.parseInt();
-            Serial.println(M5Array[Pos]);
+            //Serial.println(M5Array[Pos]);
           Count = 0;
           Pos++;
         }
         }
         myFile.close();
-       /*for(i=0;i<10;i++){
+       /* for(i=0;i<10;i++){
         while((M1.currentPosition() != M1Array[Pos] && M2.currentPosition() != M2Array[Pos] && M3.currentPosition() != M3Array[Pos] && M4.currentPosition() != M4Array[Pos] && M5.currentPosition() != M5Array[Pos] )&&  M1Array[Pos] != NULL){
               M1.moveTo(M1Array[Pos]);
               M1.setSpeed(2000);
@@ -302,14 +301,15 @@ if(Serial2.available()){
               M5.moveTo(M5Array[Pos]);
               M5.setSpeed(2000);
               Serial.println("Roboter Bewegt sich selbst");
-          }}*/
-        
+          }}
+        */
         bitClear(M_dir, 25);
         }
     else{Serial.println("File can not Be read!");}
     }
   
   if(bitRead(M_dir,24)&& bitRead(M_dir,31)==0){
+    Serial.println("Fehler 3");
   if(SD.exists("testlog.txt")){
     Serial.println("File Exists!");
     myFile = SD.open("testlog.txt", FILE_WRITE);
@@ -326,9 +326,9 @@ if(Serial2.available()){
     }else{Serial.println("File can not Be Written TO!");
     }
     }else{
-      Serial.println("File Dosen´t Exist!");
+      Serial.println("File Dosen´ t Exist!");
       }
-  }*/
+  }
    
   }
 }
