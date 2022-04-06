@@ -12,7 +12,7 @@ void setup() {
   // Serial.begin(baud-rate, potocol, RX pin, TX pin);
   Serial.begin(115200, SERIAL_8N1, RXD2, TXD2);
 
-  Ps3.begin("f0:f0:02:3b:f1:c7");
+  Ps3.begin("7c:9e:bd:62:a0:3e");
 
   Serial.println("PS3 Ready.");
   pinMode(ONBOARD_LED, OUTPUT);

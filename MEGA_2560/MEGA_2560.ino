@@ -215,7 +215,7 @@ if(Serial2.available()){
                       Home einstellen
     ---------------------------------------------------*/
 
-      if(bitRead(M_dir,20) && bitRead(M_dir,31) == 0 && home_num != 1){
+      if(bitRead(M_dir,20) && bitRead(M_dir,31) == 0){
         bitClear(M_dir, 20);
         Serial.println("Fehler 4");
         M5.setCurrentPosition(0);
