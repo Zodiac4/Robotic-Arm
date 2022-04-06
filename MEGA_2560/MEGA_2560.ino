@@ -185,9 +185,9 @@ if(Serial2.available()){
         if((bitRead(M_dir,19) && bitRead(M_dir,31) == 0)){
           if(bitRead(M_dir,19)){
             bitClear(M_dir, 19);
-            if((M_dir < 50)){
+            if((M_dir > 50)){
               M5.moveTo(-3000);
-              M5.setSpeed(M_dir * Speed*5);
+              M5.setSpeed(-M_dir * Speed*5);
               M5.run();
             }}else{
               M5.stop();
