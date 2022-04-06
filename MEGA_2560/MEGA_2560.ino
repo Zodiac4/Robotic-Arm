@@ -173,22 +173,23 @@ if(Serial2.available()){
       }
 
       
-        if((bitRead(M_dir,18)&& bitRead(M_dir,31)==0) or ((bitRead(M_dir,18) == 0) && bitRead(M_dir,31))){
-        if((bitRead(M_dir,18) == 0) && bitRead(M_dir,31)){
-          bitSet(M_dir, 18);
-        }else{bitClear(M_dir,18);}
-        
-      if((M_dir > 50) && (M5.currentPosition() < 3000)){
-        M5.moveTo(3000);
-        M5.setSpeed(M_dir * Speed*5);
-        M5.run();
-        }else if((M_dir < -50) && (-3000 < M5.currentPosition())) {
-          M5.moveTo(-3000);
-          M5.setSpeed(M_dir * Speed*5);
-          M5.run();
-          }else{
-            M5.stop();
-            }
+        if((bitRead(M_dir,18) && bitRead(M_dir,31) == 0)or (bitRead(M_dir,19) && bitRead(M_dir,31) == 0)){
+          //Serial.println("Fehler 5");
+          if(bitRead(M_dir,18)){
+            bitClear(M_dir, 18);
+            if((M_dir > 50) && (M5.currentPosition() < 3000)){
+              M5.moveTo(3000);
+              M5.setSpeed(M_dir * Speed*5);
+              M5.run();
+        }}if(bitRead(M_dir,19)){
+            bitClear(M_dir, 19);
+            else if((M_dir < 50) && (-3000 < M5.currentPosition())) {
+              M5.moveTo(-3000);
+              M5.setSpeed(M_dir * Speed*5);
+              M5.run();
+            }}else{
+              M5.stop();
+              }
           }
 
     /*-------------------------------------------------

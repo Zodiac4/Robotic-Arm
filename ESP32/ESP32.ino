@@ -71,9 +71,9 @@ void loop() {
       }
         if( abs(Ps3.data.analog.button.r1) > 2){
           M5 = Ps3.data.analog.button.r1, BIN;
-          if(bitRead(M5,18)){
-            bitClear(M5,18);
-            }else{bitSet(M5, 18);}
+          if(bitRead(M5,19)){
+            bitClear(M5,19);
+            }else{bitSet(M5, 19);}
           Serial.println(M5);
           
       }
