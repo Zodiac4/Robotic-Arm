@@ -23,7 +23,7 @@ void loop() {
   if(!Ps3.isConnected())
         return;
 
-
+    //Serial.println(Ps3.data.analog.button.r2);
     /*__________________________________________________________________
                             Motoren
       __________________________________________________________________*/
@@ -33,7 +33,7 @@ void loop() {
             bitClear(M1,8);
             }
           else{bitSet(M1, 8);}
-          Serial.println(M1);
+          //Serial.println(M1);
       }
 
       if( abs(Ps3.data.analog.stick.ry) > 2 ){
@@ -42,7 +42,7 @@ void loop() {
             bitClear(M2,10);
             }
           else{bitSet(M2, 10);}
-          Serial.println(M2);
+          //Serial.println(M2);
       }
       if( abs(Ps3.data.analog.stick.lx) > 2 ){
           M3 = Ps3.data.analog.stick.lx, BIN;
@@ -50,7 +50,7 @@ void loop() {
             bitClear(M3,12);
             }
           else{bitSet(M3, 12);}
-          Serial.println(M3);
+          //Serial.println(M3);
       }
       if( abs(Ps3.data.analog.stick.ly) > 2 ){
           M4 = Ps3.data.analog.stick.ly, BIN;
@@ -58,7 +58,7 @@ void loop() {
             bitClear(M4,14);
             }
           else{bitSet(M4, 14);}
-          Serial.println(M4);
+          //Serial.println(M4);
           
       }
         if( abs(Ps3.data.analog.button.l1) > 2){
@@ -66,7 +66,7 @@ void loop() {
           if(bitRead(M5,18)){
             bitClear(M5,18);
             }else{bitSet(M5, 18);}
-          Serial.println(M5);
+          //Serial.println(M5);
           
       }
         if( abs(Ps3.data.analog.button.r1) > 2){
@@ -74,7 +74,7 @@ void loop() {
           if(bitRead(M5,18)){
             bitClear(M5,18);
             }else{bitSet(M5, 18);}
-          Serial.println(M5);
+          //Serial.println(M5);
           
       }
     /*__________________________________________________________________
@@ -82,6 +82,7 @@ void loop() {
       __________________________________________________________________*/
       if( abs(Ps3.data.analog.button.r2) > 2){
         Servom = Ps3.data.analog.button.r2, BIN;
+        Serial.println(Servom);
           if(bitRead(Servom,22)){
             bitClear(Servom,22);
             }else{bitSet(Servom, 22);}
@@ -90,9 +91,10 @@ void loop() {
 
       if( abs(Ps3.data.analog.button.l2) > 2){
         Servom = Ps3.data.analog.button.l2, BIN;
-          if(bitRead(Servom,22)){
-            bitClear(Servom,22);
-            }else{bitSet(Servom, 22);}
+        Serial.println(Servom);
+          if(bitRead(Servom,23)){
+            bitClear(Servom,23);
+            }else{bitSet(Servom, 23);}
             Serial.println(Servom);
       }
     /*__________________________________________________________________
