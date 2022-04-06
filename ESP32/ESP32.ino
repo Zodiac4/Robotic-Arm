@@ -33,7 +33,7 @@ void loop() {
             bitClear(M1,8);
             }
           else{bitSet(M1, 8);}
-          //Serial.println(M1);
+          Serial.println(M1);
       }
 
       if( abs(Ps3.data.analog.stick.ry) > 2 ){
@@ -42,7 +42,7 @@ void loop() {
             bitClear(M2,10);
             }
           else{bitSet(M2, 10);}
-          //Serial.println(M2);
+          Serial.println(M2);
       }
       if( abs(Ps3.data.analog.stick.lx) > 2 ){
           M3 = Ps3.data.analog.stick.lx, BIN;
@@ -50,7 +50,7 @@ void loop() {
             bitClear(M3,12);
             }
           else{bitSet(M3, 12);}
-          //Serial.println(M3);
+          Serial.println(M3);
       }
       if( abs(Ps3.data.analog.stick.ly) > 2 ){
           M4 = Ps3.data.analog.stick.ly, BIN;
@@ -58,7 +58,7 @@ void loop() {
             bitClear(M4,14);
             }
           else{bitSet(M4, 14);}
-          //Serial.println(M4);
+          Serial.println(M4);
           
       }
         if( abs(Ps3.data.analog.button.l1) > 2){
@@ -66,7 +66,7 @@ void loop() {
           if(bitRead(M5,18)){
             bitClear(M5,18);
             }else{bitSet(M5, 18);}
-          //Serial.println(M5);
+          Serial.println(M5);
           
       }
         if( abs(Ps3.data.analog.button.r1) > 2){
@@ -74,7 +74,7 @@ void loop() {
           if(bitRead(M5,18)){
             bitClear(M5,18);
             }else{bitSet(M5, 18);}
-          //Serial.println(M5);
+          Serial.println(M5);
           
       }
     /*__________________________________________________________________
