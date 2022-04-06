@@ -97,12 +97,11 @@ if(Serial2.available()){
         //Serial.println(M1.currentPosition());
         //Serial.println(M1_x,BIN);
         //Serial.println(M_dir,DEC);
-      if((M_dir > 20) && (M1.currentPosition() < 3000)){
+      if((M_dir > 50) && (M1.currentPosition() < 3000)){
         M1.moveTo(3000);
-        M1.setSpeed(M_dir * Speed*5
-        );
+        M1.setSpeed(M_dir * Speed*5);
         M1.run();
-        }else if((M_dir < -20) && (-3000 < M1.currentPosition())) {
+        }else if((M_dir < -50) && (-3000 < M1.currentPosition())) {
           M1.moveTo(-3000);
           M1.setSpeed(M_dir * Speed*5);
           M1.run();
@@ -118,11 +117,11 @@ if(Serial2.available()){
         //Serial.println("Achse2");
         //Serial.println(M1_x,BIN);
         //Serial.println(M_dir,DEC);
-      if((M_dir > 20) && (M2.currentPosition() < 3000)){
+      if((M_dir > 50) && (M2.currentPosition() < 3000)){
         M2.moveTo(3000);
         M2.setSpeed(M_dir * Speed*5);
         M2.run();
-        }else if((M_dir < -20) && (-3000 < M2.currentPosition())) {
+        }else if((M_dir < -50) && (-3000 < M2.currentPosition())) {
           M2.moveTo(-3000);
           M2.setSpeed(M_dir * Speed*5);
           M2.run();
@@ -138,11 +137,11 @@ if(Serial2.available()){
         //Serial.println("Achse3");
         //Serial.println(M1_x,BIN);
         //Serial.println(M_dir,DEC);
-      if((M_dir > 20) && (M3.currentPosition() < 3000)){
+      if((M_dir > 50) && (M3.currentPosition() < 3000)){
         M3.moveTo(3000);
         M3.setSpeed(M_dir * Speed*5);
         M3.run();
-        }else if((M_dir < -20) && (-3000 < M3.currentPosition())) {
+        }else if((M_dir < -50) && (-3000 < M3.currentPosition())) {
           M3.moveTo(-3000);
           M3.setSpeed(M_dir * Speed*5);
           M3.run();
@@ -160,11 +159,11 @@ if(Serial2.available()){
         //Serial.println(M1_x,BIN);
         //Serial.println(M_dir,DEC);
         
-      if((M_dir > 20) && (M4.currentPosition() < 3000)){
+      if((M_dir > 50) && (M4.currentPosition() < 3000)){
         M4.moveTo(3000);
         M4.setSpeed(M_dir * Speed);
         M4.run();
-        }else if((M_dir < -20) && (-3000 < M4.currentPosition())) {
+        }else if((M_dir < -50) && (-3000 < M4.currentPosition())) {
           M4.moveTo(-3000);
           M4.setSpeed(M_dir * Speed);
           M4.run();
@@ -179,11 +178,11 @@ if(Serial2.available()){
           bitSet(M_dir, 18);
         }else{bitClear(M_dir,18);}
         
-      if((M_dir > 20) && (M5.currentPosition() < 3000)){
+      if((M_dir > 50) && (M5.currentPosition() < 3000)){
         M5.moveTo(3000);
         M5.setSpeed(M_dir * Speed*5);
         M5.run();
-        }else if((M_dir < -20) && (-3000 < M5.currentPosition())) {
+        }else if((M_dir < -50) && (-3000 < M5.currentPosition())) {
           M5.moveTo(-3000);
           M5.setSpeed(M_dir * Speed*5);
           M5.run();
@@ -196,8 +195,11 @@ if(Serial2.available()){
                       Servo Greifer
     -------------------------------------------------*/
         if(bitRead(M_dir,22) && bitRead(M_dir,31) == 0){
-          Serial.println("Fehler 5");
+          //Serial.println("Fehler 5");
         bitClear(M_dir, 22);
+ /* for (Pos = 180; Pos >= 0; Pos -= 1) { // goes from 180 degrees to 0 degrees
+    myservo.write(Pos);              // tell servo to go to position in variable 'pos'
+    delay(15); }*/
           if(M_dir < 0){
             myservo.write(M_dir);
             }
