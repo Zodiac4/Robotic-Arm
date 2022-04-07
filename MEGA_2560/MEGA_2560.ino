@@ -159,13 +159,13 @@ if(Serial2.available()){
         //Serial.println(M1_x,BIN);
         //Serial.println(M_dir,DEC);
         
-      if((M_dir > 50) && (M4.currentPosition() < 3000)){
-        M4.moveTo(3000);
-        M4.setSpeed(M_dir * Speed);
+      if((M_dir > 50) && (M4.currentPosition() < 10000)){
+        M4.moveTo(10000);
+        M4.setSpeed(M_dir * Speed*2);
         M4.run();
-        }else if((M_dir < -50) && (-3000 < M4.currentPosition())) {
-          M4.moveTo(-3000);
-          M4.setSpeed(M_dir * Speed);
+        }else if((M_dir < -50) && (-10000 < M4.currentPosition())) {
+          M4.moveTo(-10000);
+          M4.setSpeed(M_dir * Speed*2);
           M4.run();
           }else{
             M4.stop();
